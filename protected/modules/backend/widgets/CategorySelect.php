@@ -22,36 +22,25 @@ class CategorySelect extends InputWidget
     }
     public function run()
     {
-        $inputName = Html::getInputName($this->model, $this->attribute);
         $inputValue = Html::getAttributeValue($this->model, $this->attribute);
         $catname = $inputValue ? $this->categorys[$inputValue]['catname'] : '';
-        $tagstr = "<div class=\"input-group\">
-        <input type=\"text\" class=\"form-control\" id=\"catname\" value=\"{$catname}\" placeholder=\"选择栏目\" required disabled>
-    <span class=\"input-group-btn\">
-    <a class=\"btn btn-success\" data-remote=\"".Url::toRoute($this->defaultRoute)."\" data-toggle=\"modal\" data-target=\"#ajaxModal\" id=\"selectcategory1\"><i class=\"fa fa-send\"></i> 切换</a>
-    </span>
-  </div><input type=\"hidden\" name=\"{$inputName}\" id=\"catid\" value=\"{$inputValue}\">";
-        $url = Url::toRoute($this->defaultRoute);
-        $js = <<<JS
-$("#selectcategory").on('click',function(e){
-    layer.open({
-      title: '选择栏目',
-      type: 2,
-      area: ['400px', '450px'],
-      btn: ['确定', '取消'],
-      content: '{$url}',
-        yes: function(index, layero){
-            var data=$(layero).find("iframe")[0].contentWindow.callbackdata();
-$('#catname').val(data.catname);
-$('#catid').val(data.catid);
-layer.close(index);
-          }
-    });
-});
+        $buttonOptions = [
+            'class' => 'btn btn-success',
+            'data-remote' => Url::toRoute($this->defaultRoute),
+            'data-toggle' => 'modal',
+            'data-target' => '#ajaxModal',
+        ];
+        $buttonHtml = Html::beginTag('div', ['class' => 'input-group-append']) . "\n";
+        $buttonHtml .= Html::button('<i class="fa fa-send"></i> 切换', $buttonOptions);
+        $buttonHtml .= Html::endTag('div') . "\n";
+        
+        $inputHtml = Html::beginTag('div', ['class' => 'input-group']) . "\n";
+        $inputHtml .= Html::input('text', 'catname', $catname, ['class' => 'form-control', 'placeholder' => '选择栏目', 'disabled' => true]) . "\n";
+        $inputHtml .= $buttonHtml;
+        $inputHtml .= Html::endTag('div') . "\n";
+        $inputHtml .= Html::activeHiddenInput($this->model, $this->attribute);
 
-JS;
-        $this->view->registerJs($js);
-        return $tagstr;
+        return $inputHtml;
         
     }
 }

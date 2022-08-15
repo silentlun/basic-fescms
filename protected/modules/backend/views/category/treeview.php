@@ -44,8 +44,8 @@ $this->registerJsFile(
 			catname = $(this).attr('data-name');
         })
         $('#categoryTreeBtn').click(function(){
-            $('#catname').val(catname);
-            $('#catid').val(catid);
+            $('input[name="catname"]').val(catname);
+            $('#content-catid').val(catid);
             $('#ajaxModal').modal('hide');
         })
     })

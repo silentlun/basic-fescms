@@ -70,6 +70,7 @@ class Menu extends Widget
     
     public function renderItems($items)
     {
+        $lines = [];
         foreach ($items as $item) {
             $menu = $this->renderItem($item);
             $options = ArrayHelper::getValue($item, 'option', []);
@@ -111,11 +112,11 @@ class Menu extends Widget
         //return ArrayHelper::merge([['label' => '首页', 'url' => '/site/index']], $this->getChild($categorys));
     }
     
-    protected function getChild($datas, $parentid = 0)
+    protected function getChild($datas, $parentId = 0)
     {
         $items = [];
         foreach ($datas as $r) {
-            if ($r['parentid'] != $parentid) continue;
+            if ($r['parent_id'] != $parentId) continue;
             $item['label'] = $r['name'];
             $item['url'] = $r['route'];
             $item['target'] = $r['target'];

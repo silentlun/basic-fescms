@@ -32,14 +32,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
             'name',
             'email:email',
             'mobile',
-            'content:ntext',
-            //'status',
-            //'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'content',
+                'width' => '',
+                'format' => 'ntext',
+            ],
 
             [
                 'class' => 'backend\components\grid\ActionColumn',
-                'headerOptions' => ['width' => 150],
+                'headerOptions' => ['width' => 60],
+                'template' => '{delete}',
             ],
         ],
     ]); ?>

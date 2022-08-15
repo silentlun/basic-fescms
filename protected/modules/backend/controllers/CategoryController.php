@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use app\models\Category;
 use yii\web\NotFoundHttpException;
+use backend\actions\CreateAction;
+use backend\actions\UpdateAction;
 use backend\actions\DeleteAction;
 use backend\actions\SortAction;
 use yii\data\ArrayDataProvider;
@@ -36,12 +38,28 @@ class CategoryController extends BaseController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id = 0)
+    /* public function actionCreate($id = 0)
     {
         $model = new Category();
-        $model->parentid = $id;
+        $model->parent_id = $id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $data = [];
+            $options = $model->attributes['options'];
+            $options = explode("\n", trim($options));
+            foreach ($options as $k => $_v){
+                if(trim($_v)=='') continue;
+                $names = explode('|', $_v);
+                $data[$k]['catname'] = trim($names[0]);
+                $data[$k]['catdir'] = trim($names[1]);
+                $data[$k]['parent_id'] = intval($model->attributes['parentid']);
+                $data[$k]['category_template'] = $model->attributes['category_template'];
+                $data[$k]['list_template'] = $model->attributes['list_template'];
+                $data[$k]['show_template'] = $model->attributes['show_template'];
+                $data[$k]['page_template'] = $model->attributes['page_template'];
+            }
+            Yii::$app->db->createCommand()->batchInsert(Category::tableName(), ['catname', 'catdir', 'parent_id', 'category_template', 'list_template', 'show_template', 'page_template'], $data)->execute();
+            
             Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
             return $this->redirect(['index']);
         }
@@ -49,29 +67,15 @@ class CategoryController extends BaseController
         return $this->render('create', [
             'model' => $model,
         ]);
-    }
+    } */
 
     /**
-     * Updates an existing Category model.
+     * Treeview an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-    
     public function actionTreeview()
     {
         $categorys = Category::find()->where(['type' => 0])->orderBy('sort asc,id asc')->indexBy('id')->asArray()->all();
@@ -98,6 +102,15 @@ class CategoryController extends BaseController
     public function actions()
     {
         return [
+            'create' => [
+                'class' => CreateAction::className(),
+                'modelClass' => Category::className(),
+                'parentId' => Yii::$app->request->get('id'),
+            ],
+            'update' => [
+                'class' => UpdateAction::className(),
+                'modelClass' => Category::className(),
+            ],
             'delete' => [
                 'class' => DeleteAction::className(),
                 'modelClass' => Category::className(),

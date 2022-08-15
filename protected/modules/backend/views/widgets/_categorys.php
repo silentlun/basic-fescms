@@ -12,8 +12,8 @@ use app\models\Category;
 use backend\widgets\CategoryTree;
 
 
-$this->registerCssFile("@web/static/admin/plugins/jquery-treeview/css/jquery.treeview.css",['depends'=>['backend\assets\AdminAsset']]);
-$this->registerJsFile("@web/static/admin/plugins/jquery-treeview/js/jquery.treeview.js",['depends'=>['backend\assets\AdminAsset']]);
+$this->registerCssFile("@web/static/plugins/jquery-treeview/css/jquery.treeview.css",['depends'=>['backend\assets\AdminAsset']]);
+$this->registerJsFile("@web/static/plugins/jquery-treeview/js/jquery.treeview.js",['depends'=>['backend\assets\AdminAsset']]);
 
 
 ?>
@@ -23,14 +23,15 @@ $this->registerJsFile("@web/static/admin/plugins/jquery-treeview/js/jquery.treev
 	display: auto;
 	padding: 1px 0 1px 16px;
 }
+.filetree .active{color:#007BFF;font-weight: 600}
 </style>
 <div class="cat-menu card">
   <h4 class="card-header">栏目导航</h4>
   <div class="card-body cat-menubody">
-    <div id="treecontrol"><a href="#"><img src="/static/admin/plugins/jquery-treeview/images/minus.gif" /> <img src="/static/admin/plugins/jquery-treeview/images/application_side_expand.png" /> 展开/收缩</a> </div>
+    <div id="treecontrol"><span style="display:none"> <a href="#"></a> <a href="#"></a> </span> <a href="#"><img src="/static/plugins/jquery-treeview/images/minus.gif" /> <img src="/static/plugins/jquery-treeview/images/application_side_expand.png" /> 展开/收缩</a> </div>
         
         <ul class="filetree  treeview">
-          <li><span class="folder"><a href="<?php echo Url::toRoute('content/index');?>" data-pjax="1">全部</a></span></li>
+          <li><span class="folder"><a href="<?php echo Url::toRoute('content/index');?>" class="filetree-item active" data-pjax="1">全部</a></span></li>
         </ul>
         <?php 
         echo CategoryTree::widget([

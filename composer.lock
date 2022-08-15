@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67a072a13de27aac80de77e78bb7df4b",
+    "content-hash": "d8bb1500ec0aca15bd9b11e50953c478",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -400,6 +400,50 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "silentlun/yii2-datepicker",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silentlun/yii2-datepicker.git",
+                "reference": "aa3f3f97fba8c1c0881891504fc120fbe412a561"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silentlun/yii2-datepicker/zipball/aa3f3f97fba8c1c0881891504fc120fbe412a561",
+                "reference": "aa3f3f97fba8c1c0881891504fc120fbe412a561",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "silentlun\\datepicker\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "silentlun",
+                    "email": "4668460@qq.com"
+                }
+            ],
+            "description": "Datepicker extension for YII2",
+            "keywords": [
+                "extension",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/silentlun/yii2-datepicker/issues",
+                "source": "https://github.com/silentlun/yii2-datepicker/tree/1.1"
+            },
+            "time": "2021-09-18T02:50:28+00:00"
         },
         {
             "name": "silentlun/yii2-daterangepicker",
@@ -1591,5 +1635,5 @@
         "php": ">=5.6.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.3.0"
 }

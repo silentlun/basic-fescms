@@ -13,6 +13,6 @@ class DateColumn extends DataColumn
     public function init()
     {
         parent::init();
-        $this->headerOptions['width'] = '130';
+        $this->headerOptions['width'] = '140';
     }
 }

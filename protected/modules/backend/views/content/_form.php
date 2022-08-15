@@ -15,25 +15,19 @@ $categorys = Category::getCategory();
 
 if ($model->isNewRecord) {
     $model->catid = Yii::$app->request->get('catid');
+    $model->status = $model::STATUS_ACTIVE;
 }
 
-/* if ($model->posid && !is_array($model->posid)) {
- $model->posid = explode(',', $model->posid);
- } */
-$inputdisabled = $model->islink ? false : true;
-
-$baseTemplate = "{label}\n<div class=\"col-sm-10\">{input}\n{hint}\n{error}</div>\n";
-$optionTemplate = "{label}\n<div class=\"col-sm-12\">{input}\n{hint}\n{error}</div>";
-$editorTemplate = "{label}\n<div class=\"col-sm-10\">{input}\n{error}\n<div class=\"alert alert-warning no-margins form-inline\"><label><input name=\"add_introduce\" type=\"checkbox\"  value=\"1\" checked>是否截取内容</label><input type=\"text\" name=\"introcude_length\" value=\"100\" size=\"3\" class=\"form-control input-sm\">字符至内容摘要
-<label><input type='checkbox' name='auto_thumb' value=\"1\" checked>是否获取内容第</label><input type=\"text\" name=\"auto_thumb_no\" value=\"1\" size=\"2\" class=\"form-control input-sm\">张图片作为标题图片</div></div>";
+$optionTemplate = "{label}\n<div class=\"col\">{input}\n{hint}\n{error}</div>";
+$editorHint = "<div class=\"mt-2 form-inline\"><label><input name=\"add_introduce\" type=\"checkbox\"  value=\"1\" checked>是否截取内容</label><input type=\"text\" name=\"introcude_length\" value=\"100\" size=\"3\" class=\"form-control input-xs\">字符至内容摘要
+<label class='ml-3'><input type='checkbox' name='auto_thumb' value=\"1\" checked>是否获取内容第</label><input type=\"text\" name=\"auto_thumb_no\" value=\"1\" size=\"2\" class=\"form-control input-xs\">张图片作为标题图片</div>";
 ?>
 <?= $this->render('/widgets/_page-heading') ?>
 <?php $form = ActiveForm::begin([
-			  'fieldConfig' => [
-			      //'template' => $baseTemplate,
-				  //'labelOptions' => ['class' => 'col-sm-2 control-label'],              
-			  ],
-			  'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
+    'fieldConfig' => [
+        'labelOptions' => ['class' => 'col-md-2 col-form-label'],
+    ],
+	'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
   ]); ?>
 <div class="row">
   
@@ -42,32 +36,23 @@ $editorTemplate = "{label}\n<div class=\"col-sm-10\">{input}\n{error}\n<div clas
       <ul class="nav nav-tabs page-tabs">
         <li class="nav-item active"><a class="nav-link">基本信息</a></li>
       </ul>
-      <div class="card-body p-m">
+      <div class="card-body p-3">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         
-        <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'keywords')->textInput(['maxlength' => true])->hint('多关键词之间用空格或者英文逗号“,”隔开') ?>
         
         
         <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
-        <?= $form->field($model, 'content', ['template' => $editorTemplate])->widget('backend\widgets\ueditor\Ueditor',[
+        <?= $form->field($model, 'content')->widget('backend\widgets\ueditor\Ueditor',[
 			'options'=>[
 				'initialFrameWidth' => '100%',
 				'initialFrameHeight' => 400
 			]
-		]) ?>
+        ])->hint($editorHint) ?>
 		<?= $form->field($model, 'tagValues')->checkboxList(\app\models\Tag::getTags()) ?>
-		<div class="form-group row field-content-linkurl">
-        <label class="col-sm-2  col-form-label" for="content-linkurl">转向链接</label>
-        <div class="col-sm-10">
-        	<div class="input-group">
-        	<?= Html::activeInput('text', $model, 'linkurl', ['class' => 'form-control', 'id' => 'linkurl', 'disabled' => $inputdisabled]) ?>
-              <div class="input-group-append">
-                <span class="input-group-text"><?= Html::activeCheckbox($model, 'islink', ['onclick' => 'ruselinkurl();', 'id' => 'islink']);?></span>
-              </div>
-            </div>
-        </div>
-        
-        </div>
+		
+		<?= $form->field($model, 'url')->linkInput() ?>
+		
       </div>
     </div>
   </div>
@@ -76,7 +61,7 @@ $editorTemplate = "{label}\n<div class=\"col-sm-10\">{input}\n{error}\n<div clas
       <ul class="nav nav-tabs page-tabs">
         <li class="nav-item active"><a class="nav-link">属性</a></li>
       </ul>
-      <div class="card-body p-m">
+      <div class="card-body p-3">
         <label>栏目分类</label>
         <?= $form->field($model, 'catid',['template' => $optionTemplate])->widget('backend\widgets\CategorySelect',['categorys'=>$categorys])->label(false) ?>
         
@@ -92,7 +77,7 @@ $editorTemplate = "{label}\n<div class=\"col-sm-10\">{input}\n{error}\n<div clas
         </div>
         <div class="form-group">
           <div class="col-sm-12">
-            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success btn-block']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary btn-block']) ?>
           </div>
         </div>
       </div>

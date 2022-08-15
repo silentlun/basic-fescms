@@ -9,6 +9,7 @@ use app\models\Content;
 use app\models\Category;
 use app\models\Page;
 use app\helpers\Util;
+use yii\helpers\ArrayHelper;
 
 /**
  * ContentController implements the CRUD actions for Content model.
@@ -26,55 +27,48 @@ class ContentController extends BaseController
         if (empty($categoryModel)) {
             throw new NotFoundHttpException('None page named ' . $catdir);
         }
-        $category = [];
-        $categorys = Category::getCategory();
-        if ($categoryModel->parentid == 0) {
-            $catids = [$categoryModel->id];
-            foreach ($categorys as $cat) {
-                if ($cat['parentid'] != $categoryModel->id) continue;
-                $catids[] = $cat['id'];
-                $category[] = $cat;
-            }
-            $where = ['in', 'catid', $catids];
+        
+        $categorys = [];
+        if ($categoryModel->parent_id == 0) {
+            $categorys = Category::getChildCategory($categoryModel->id);
             $bannerImg = $categoryModel->image;
+            if ($categorys) {
+                $catids = ArrayHelper::getColumn($categorys, 'id');
+                $where = ['in', 'catid', $catids];
+            } else {
+                $where = ['catid' => $categoryModel->id];
+            }
         } else {
-            foreach ($categorys as $cat) {
-                if ($cat['parentid'] != $categoryModel->parentid) continue;
-                $category[] = $cat;
-            }
+            $category = Category::getChildCategory($categoryModel->parent_id);
+            $bannerImg = $categoryModel->parent->image;
             $where = ['catid' => $categoryModel->id];
-            foreach ($categorys as $cat){
-                if ($cat['id'] == $categoryModel->parentid){
-                    $bannerImg = $cat['image'];
-                }
-            }
         }
         if ($categoryModel->type == 0) {
-            $query = Content::find()->select(['id', 'catid', 'title', 'thumb', 'url', 'description', 'created_at'])->where(['status' => 99])
-            ->andFilterWhere($where)->orderBy('sort DESC,id DESC');
+            $query = Content::find()->select(['id', 'catid', 'title', 'thumb', 'url', 'islink', 'description', 'created_at'])
+            ->where(['status' => Content::STATUS_ACTIVE])
+            ->andFilterWhere($where)
+            ->asArray()
+            ->orderBy('sort DESC,id DESC');
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
                 'pagination' => [
-                    'pageSize' => 1,
+                    'pageSize' => 15,
                 ],
             ]);
-            $template = 'list_news';
-            $categoryModel->list_template != "" && $template = $categoryModel->list_template;
-            
-            
+            $template = $categoryModel->list_template ?: 'list_news';
             return $this->render($template, [
                 'dataProvider' => $dataProvider,
-                'category' => $category,
+                'categorys' => $categorys,
                 'categoryModel' => $categoryModel,
                 'bannerImg' => $bannerImg,
             ]);
         } else {
             $model = Page::findOne(['catid' => $categoryModel->id]);
             if (($model = Page::findOne(['catid' => $categoryModel->id])) !== null) {
-                $template = $categoryModel->page_template ? $categoryModel->page_template : 'page';
+                $template = $categoryModel->page_template ?: 'page';
                 return $this->render($template, [
                     'model' => $model,
-                    'category' => $category,
+                    'categorys' => $categorys,
                     'categoryModel' => $categoryModel,
                     'bannerImg' => $bannerImg,
                 ]);
@@ -94,31 +88,15 @@ class ContentController extends BaseController
     {
         //exit('view/'.$id);
         $model = $this->findModel($id);
+        if ($model->status !== Content::STATUS_ACTIVE) throw new NotFoundHttpException('The requested page does not exist.');
+        if (Util::checkRobot()) $model->updateCounters(['views' => 1]);
         $categoryModel = Category::findOne($model->catid);
-        $template = 'show';
-        $categoryModel->show_template != "" && $template = $categoryModel->show_template;
+        $template = $categoryModel->show_template ?: 'show';
         $model->template != "" && $template = $model->template;
-        if ($categoryModel->parentid == 0) {
+        if ($categoryModel->parent_id == 0) {
             $bannerImg = $categoryModel->image;
         } else {
-            $parentCatModel = Category::findOne($categoryModel->parentid);
-            $bannerImg = $parentCatModel->image;
-        }
-        
-        $previousPage = Content::find()->select(['id', 'title', 'url'])
-        ->where(['catid' => $model->catid, 'status' => Content::STATUS_ACTIVE])
-        ->andWhere(['<', 'id', $id])
-        ->limit(1)->asArray()->one();
-        $nextPage = Content::find()->select(['id', 'title', 'url'])
-        ->where(['catid' => $model->catid, 'status' => Content::STATUS_ACTIVE])
-        ->andWhere(['>', 'id', $id])
-        ->limit(1)->asArray()->one();
-        if (empty($previousPage)) {
-            $previousPage = ['title' => Yii::t('app', 'First Page'), 'url' => 'javascript:;'];
-        }
-        
-        if (empty($nextPage)) {
-            $nextPage = ['title' => Yii::t('app', 'Last Page'), 'url' => 'javascript:;'];
+            $bannerImg = $categoryModel->parent->image;
         }
         $model->content = Util::contentStrip($model->content);
         

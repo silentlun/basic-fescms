@@ -48,7 +48,8 @@ class Feedback extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 20],
             [['email'], 'email'],
             ['mobile', 'match', 'pattern' => '/^[1][3456789][0-9]{9}$/'],
-            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha','message' => yii::t('app', 'Verification code error.')],
+            ['verifyCode', 'required', 'message' => Yii::t('app', 'Please click to complete the verification')],
+            ['verifyCode', 'validateVerifyCode'],
         ];
     }
 
@@ -67,5 +68,24 @@ class Feedback extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
+    }
+    
+    public function validateVerifyCode($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            if ($this->verifyCode != Yii::$app->session->get('verifyCode')) {
+                $this->addError($attribute, '参数错误，请刷新页面重新操作');
+            }
+            Yii::$app->session->remove('verifyCode');
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getErrorMessage() {
+        $errors = $this->getFirstErrors();
+        if(!is_array($errors)) return '';
+        return array_shift($errors);
     }
 }

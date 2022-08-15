@@ -15,31 +15,11 @@ use app\models\Content;
 use app\models\Category;
 use app\models\Feedback;
 use app\models\Attachment;
+use yii\helpers\ArrayHelper;
+use app\models\VisitorStat;
 
 class SiteController extends BaseController
 {
-   /*  public function behaviors()
-    {
-        parent::behaviors();
-        return [
-            'admin_access' => [
-                'class' => AccessControl::className(),
-                'user' => 'admin',
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error', 'captcha'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'main'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-        ];
-    } */
     /**
      * {@inheritdoc}
      */
@@ -83,6 +63,31 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
+        $request = Yii::$app->request;
+        $startDate = $request->get('startDate', date('Y-m-d', time() - 7 * 86400));
+        $endDate = $request->get('endDate', date('Y-m-d'));
+        if ($request->isAjax) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $uvCount = VisitorStat::getCountUV($startDate, $endDate);
+            $pvCount = VisitorStat::getCountPV($startDate, $endDate);
+            $ipCount = VisitorStat::getCountIP($startDate, $endDate);
+            $daylist = $this->getDateFromRange($startDate, $endDate);
+            
+            $str = "Day,UV,PV\n";
+            $uvTotal = $pvTotal = 0;
+            foreach ($daylist as $k => $r){
+                $uvNum = ArrayHelper::keyExists($r, $uvCount, false) ? intval($uvCount[$r]['total']) : 0;
+                $pvNum = ArrayHelper::keyExists($r, $pvCount, false) ? intval($pvCount[$r]['total']) : 0;
+                $str .= $r.",{$uvNum},{$pvNum}\n";
+                $uvTotal += $uvNum;
+                $pvTotal += $pvNum;
+            }
+            $ipTotal = 0;
+            foreach ($ipCount as $v){
+                $ipTotal += $v['total'];
+            }
+            return ['data' => $str, 'uvTotal' => $uvTotal, 'pvTotal' => $pvTotal, 'ipTotal' => $ipTotal];
+        }
         switch (Yii::$app->getDb()->driverName) {
             case "mysql":
                 $dbInfo = 'MySQL ' . (new Query())->select('version()')->one()['version()'];
@@ -106,15 +111,16 @@ class SiteController extends BaseController
         $categoryCount = Category::find()->count();
         $feedbackCount = Feedback::find()->count();
         $attCount = Attachment::find()->count();
+        $topViews = Content::find()->select(['id', 'title', 'views'])->limit(5)->orderBy('views DESC')->asArray()->all();
         return $this->render('main', [
             'info' => $info,
             'categoryCount' => $categoryCount,
             'feedbackCount' => $feedbackCount,
             'contentCount' => $contentCount,
             'attCount' => $attCount,
-        ]);
-        return $this->render('main', [
-            'info' => $info,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'topViews' => $topViews,
         ]);
     }
     

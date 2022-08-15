@@ -24,10 +24,6 @@ class SortAction extends Action {
             if ($listorders){
                 foreach ($listorders as $id => $listorder){
                     $model = call_user_func([$this->modelClass, 'updateAll'], ['sort' => $listorder], ['id' => $id]);
-                    /* $model->sort = $listorder;
-                    if (!$model->save()){
-                        $errorIds[] = $id;
-                    } */
                 }
             }
         }

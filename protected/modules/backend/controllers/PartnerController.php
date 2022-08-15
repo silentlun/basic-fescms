@@ -24,6 +24,11 @@ class PartnerController extends BaseController
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Partner::find(),
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
         ]);
 
         return $this->render('index', [

@@ -50,17 +50,13 @@ $model = new Feedback();
 
                 <?= $form->field($model, 'content')->textarea(['rows' => 3]) ?>
                 
-                <?= $form->field($model, 'verifyCode')->label(false)->widget(Captcha::className(), [
-            'captchaAction' => '/site/captcha',
-            'template' => '<div class="row"><div class="col-6">{input}</div><div class="col-6">{image}</div></div>',
-            'options' => [
-                'class' => 'form-control',
-                'placeholder' => Yii::t("app", "Verification Code"),
-            ],
-                ]) ?>
-
+                <div class="form-group">
+                  <div class="verify-captcha">
+                  	<div class="captcha-tips"><i class="fa fa-shield"></i> 点击完成验证</div>
+                  	<div class="captcha-tips-success"><i class="fa fa-check"></i> 验证成功</div>
+                  </div>
+                </div>
                 
-
                 <div class="row justify-content-center">
 								<div class="col-6"><?= Html::submitButton('提交留言', ['class' => 'btn btn-primary btn-block btn-lg', 'name' => 'contact-button']) ?></div>
 							</div>

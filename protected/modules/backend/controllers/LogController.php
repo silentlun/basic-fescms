@@ -6,6 +6,7 @@ use Yii;
 use backend\models\AdminLog;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
+use backend\actions\DeleteAction;
 
 /**
  * LogController implements the CRUD actions for AdminLog model.
@@ -21,6 +22,15 @@ class LogController extends BaseController
     {
         $dataProvider = new ActiveDataProvider([
             'query' => AdminLog::find()->with('admin'),
+            'sort' => [
+                'attributes' => [
+                    'id',
+                    'route',
+                ],
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
         ]);
 
         return $this->render('index', [
@@ -34,63 +44,12 @@ class LogController extends BaseController
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionViewLayer($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new AdminLog model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new AdminLog();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing AdminLog model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
+    public function actionView($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
+        return $this->renderAjax('view', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Deletes an existing AdminLog model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
@@ -107,5 +66,18 @@ class LogController extends BaseController
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [
+            'delete' => [
+                'class' => DeleteAction::className(),
+                'modelClass' => AdminLog::className(),
+            ],
+        ];
     }
 }

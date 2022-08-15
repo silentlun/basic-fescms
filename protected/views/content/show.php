@@ -36,16 +36,6 @@ $this->params['breadcrumbs'][] = '详情';
 	
 		</div>
 	</div>
-		
-	<div class="row ps-navigation mb-5">
-		<div class="col">
-		<span><i class="fa fa-long-arrow-left"></i> 上一篇</span>
-		<a href="<?= $previousPage['url'] ?>"><?= $previousPage['title'] ?></a>
-		</div>
-		<div class="col text-right">
-		<span>下一篇 <i class="fa fa-long-arrow-right"></i></span>
-		<a href="<?= $nextPage['url'] ?>"><?= $nextPage['title'] ?></a>
-		</div>
-	</div>
+	
 </div>
 

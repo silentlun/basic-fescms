@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
     <div class="card-toolbar clearfix">
       
       <div class="toolbar-btn-action">
-      <?= Bar::widget() ?>
+      <?= Bar::widget(['template' => '{create} {delete}']) ?>
       </div>
     </div>
     <div class="card-body">

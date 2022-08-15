@@ -1,10 +1,10 @@
 <?php
 use yii\helpers\Url;
+use app\models\Content;
+use app\helpers\Util;
 /* @var $this yii\web\View */
 
 $this->title = '';
-
-
 ?>
 <section class="banner-section">
 			<div class="home-carousel owl-theme owl-carousel">
@@ -202,17 +202,19 @@ $this->title = '';
 				</div>
 				
 				<div class="row">
+					<?php foreach (Content::getAllList(6,1) as $r){?>
 					<div class="col-md-4">
 						<div class="card mb-4 shadow-sm news-card wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<a class="hover-img" href="#"><img class="card-img-top" src="images/news-01.jpg" alt="IMG"></a>
+							<a class="hover-img" href="<?=Util::toViewUrl($r)?>"><img class="card-img-top" src="<?=$r['thumb']?>"></a>
 							<div class="card-body">
-								<h4><a href="news-detail.html" class="trans-02">最新动态标题最新动态标题</a></h4>
-								<div class="card-date"><i class="fa fa-calendar"></i> 2020-08-09</div>
-								<p class="card-text">动态内容家乐福师大动态内容家乐福师大动态内容家乐福师大动态内容家乐福师大</p>
-								<a href="#" class="btn btn-outline-secondary">查看详情</a>
+								<h4><a href="<?=Util::toViewUrl($r)?>" class="trans-02"><?=$r['title']?></a></h4>
+								<div class="card-date"><i class="fa fa-calendar"></i> <?=date('Y-m-d', $r['created_at'])?></div>
+								<p class="card-text"><?=Util::strCut($r['description'], 36)?></p>
+								<a href="<?=Util::toViewUrl($r)?>" class="btn btn-outline-secondary">查看详情</a>
 							</div>
 						</div>
 					</div>
+					<?php }?>
 					<div class="col-md-4">
 						<div class="card mb-4 shadow-sm news-card wow fadeInUp" data-wow-delay="250ms" data-wow-duration="1500ms">
 							<a class="hover-img" href="#"><img class="card-img-top" src="images/news-02.jpg" alt="IMG"></a>

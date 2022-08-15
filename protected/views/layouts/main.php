@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
@@ -15,7 +16,7 @@ $this->title = $this->title ? $this->title.' - ' : '';
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title.Yii::$app->config->site_title) ?></title>
     <meta name="keywords" content="<?= Html::encode(Yii::$app->config->site_keywords) ?>" >
-	<meta name="description" content=""<?= Html::encode(Yii::$app->config->site_description) ?>>
+	<meta name="description" content="<?= Html::encode(Yii::$app->config->site_description) ?>">
     <?php $this->head() ?>
 </head>
 <body>
@@ -122,6 +123,7 @@ $this->title = $this->title ? $this->title.' - ' : '';
 <?= $this->render('_flash') ?>
 <div style="display:none">
 <?= Yii::$app->config->site_statics_script ?>
+<script type="text/javascript" src="<?=Url::toRoute(['site/count'])?>"></script>
 </div>
 </body>
 </html>

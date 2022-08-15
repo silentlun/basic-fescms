@@ -40,16 +40,15 @@ class AttachmentController extends BaseController
     
     public function actionViewLayer($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
     
-    public function actionThumbs($id)
+    public function actionThumbs($filepath)
     {
         $thumbs = [];
-        $model = $this->findModel($id);
-        $infos = glob(dirname(Yii::getAlias('@uploads/').$model->filepath).'/thumb_*'.basename($model->filepath));
+        $infos = glob(dirname(Yii::getAlias('@uploads/').$filepath).'/thumb_*'.basename($filepath));
         if ($infos) {
             foreach ($infos as $n => $thumb) {
                 $thumbs[$n]['thumb_url'] = str_replace(Yii::getAlias('@uploads/'), Yii::$app->config->site_upload_url, $thumb);
@@ -60,7 +59,7 @@ class AttachmentController extends BaseController
             }
         }
         
-        return $this->render('thumb', [
+        return $this->renderAjax('thumb', [
             'thumbs' => $thumbs,
         ]);
     }
@@ -118,17 +117,6 @@ class AttachmentController extends BaseController
     {
         $model = new AttachmentSearch();
         $dataProvider = $model->search(Yii::$app->request->queryParams);
-        /* $dataProvider = new ActiveDataProvider([
-            'query' => Attachment::find(),
-            'pagination' => [
-                'pageSize' => 8,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC
-                ]
-            ]
-        ]); */
         
         return $this->render('album', [
             'model' => $model,

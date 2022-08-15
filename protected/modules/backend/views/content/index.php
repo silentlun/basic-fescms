@@ -49,18 +49,19 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
                 'width' => '',
                 'format' => 'raw',
                 'value' => function($model){
-                $thumb = $model->thumb ? ' <i class="fa fa-image text-info"></i>' : '';
+                $thumb = $model->thumb ? ' <i class="fa fa-image text-primary"></i>' : '';
                 $posid =  $model->tagValues ? ' <i class="fa fa-flag text-danger"></i>' : '';
-                return $model->title.$thumb.$posid;
+                return Html::a($model->title.$thumb.$posid, ['/content/view', 'id' => $model->id]);
                 }
             ],
+            'views',
             [
                 'attribute' => 'status',
                 'header' => '状态',
                 'width' => '80',
                 'format' => 'raw',
                 'value'  => function($model){
-                    return $model->status == 99 ? '<label class="label label-success">发布</label>' : '<label class="label label-default">隐藏</label>';
+                    return Constants::getContentStatus($model->status);
                 },
                 'filter' => Constants::getContentStatus(),
             ],
@@ -71,7 +72,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
             ],
             [
                 'class' => 'backend\components\grid\ActionColumn',
-                'headerOptions' => ['width' => 150],
+                'headerOptions' => ['width' => 80],
+                'template' =>'{update}',
             ],
         ],
     ]); ?>

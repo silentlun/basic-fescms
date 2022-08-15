@@ -23,7 +23,7 @@ class CategoryWidget extends Widget
         parent::run();
         $list = '';
         foreach ($this->data as $id => $v){
-            if ($v['parentid'] != 0) continue;
+            if ($v['parent_id'] != 0) continue;
             $arrow = '';
             $child = $this->getChild($id);
             if ($child) {
@@ -49,7 +49,7 @@ HTML;
         $arrow = '';
         $substr = '';
         foreach ($this->data as $id => $_v){
-            if ($_v['parentid'] != $myid) continue;
+            if ($_v['parent_id'] != $myid) continue;
             $child = $this->getChild($id);
             if ($child) {
                 $arrow = '<span class="fa arrow"></span>';

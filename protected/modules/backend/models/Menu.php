@@ -36,11 +36,11 @@ class Menu extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'route'], 'required'],
-            [['parentid', 'type', 'sort', 'display'], 'integer'],
-            [['name', 'route', 'icon', 'data'], 'string', 'max' => 255],
-            ['parentid', 'default', 'value' => 0],
-            [['sort','type'], 'default', 'value' => 0],
-            ['display', 'default', 'value' => 1],
+            [['name', 'route', 'icon', 'data'], 'trim'],
+            [['parent_id', 'type', 'sort', 'display'], 'integer'],
+            [['name', 'route', 'icon', 'data'], 'string', 'max' => 100],
+            [['parent_id', 'sort', 'type'], 'default', 'value' => 0],
+            ['display', 'default', 'value' => self::DISPLAY_NO],
         ];
     }
 
@@ -52,10 +52,11 @@ class Menu extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'parentid' => Yii::t('app', 'Parentid'),
+            'parent_id' => Yii::t('app', 'Parentid'),
             'route' => Yii::t('app', 'Route'),
             'data' => '参数',
             'type' => '菜单类别',
+            'icon' => Yii::t('app', 'Icon'),
             'sort' => Yii::t('app', 'Listorder'),
             'display' => Yii::t('app', 'Display'),
         ];

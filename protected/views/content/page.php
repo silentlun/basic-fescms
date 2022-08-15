@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<div class="widget-title"><h4>栏目导航</h4></div>
 					<ul class="categories-list clearfix">
 					    <?php 
-					    foreach ($category as $cat){
+					    foreach ($categorys as $cat){
 					        $class = [];
 					        if ($cat['id'] == $categoryModel->id){
 					            $class['class'] = 'current';

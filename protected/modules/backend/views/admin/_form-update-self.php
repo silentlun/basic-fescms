@@ -18,17 +18,17 @@ if ($model->id) {
 ?>
 <?= $this->render('/widgets/_page-heading') ?>
 <div class="card">
-  <div class="card-header">
-    <h4><?= $subtitle ?></h4>
-  </div>
+  <ul class="nav nav-tabs page-tabs">
+    <li class="nav-item active"><a class="nav-link"><?= $subtitle ?></a></li>
+  </ul>
   <div class="card-body">
     <?php $form = ActiveForm::begin(); ?>
     
     <?= $form->field($model, 'username')->staticControl() ?>
 
-    <?= $form->field($model, 'old_password')->passwordInput() ?>
-    <?= $form->field($model, 'password')->passwordInput()->label('新密码') ?>
-    <?= $form->field($model, 'repassword')->passwordInput() ?>
+    <?= $form->field($model, 'email')->textInput() ?>
+    
+    <?= $form->field($model, 'password')->passwordInput(['placeholder' => '不修改密码请留空']) ?>
 
 
     <?= $form->defaultButtons() ?>

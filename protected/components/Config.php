@@ -50,7 +50,7 @@ class Config extends yii\base\BaseObject {
     
     public function backendInit()
     {
-        return true;
+        //return true;
         Event::on(BaseActiveRecord::className(), BaseActiveRecord::EVENT_AFTER_INSERT, [
             AdminLog::className(),
             'create'

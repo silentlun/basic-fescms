@@ -201,7 +201,7 @@ class UploadAction extends Action{
                 return [
                     'state'=>'SUCCESS', 
                     'url' => Yii::$app->config->site_upload_url.$filepath,
-                    'title'=>$filename
+                    'title' => $original_name
                 ];
             } else {
                 return ['state'=>'上传失败'];

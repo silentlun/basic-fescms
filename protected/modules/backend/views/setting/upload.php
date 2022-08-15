@@ -18,12 +18,12 @@ $this->params['breadcrumbs'][] = '基本设置';
         'options' => ['class' => 'form-horizontal none-loading'],
       'enableAjaxValidation' => true,
     ]); ?>
-  <div class="tab-content">
-    <div class="tab-pane fade show active" id="attr">
+  <div class="card-body">
+    
       <?= $form->field($model, 'site_upload_url')->textInput() ?>
       <?= $form->field($model, 'site_upload_allowext')->textInput() ?>
       <?= $form->field($model, 'site_upload_maxsize',['template'=>"{label}\n<div class=\"col-sm-6\"><div class=\"row\"><div class=\"col-sm-6\">\n{input}\n{error}</div><div class=\"col-sm-6 form-control-static\">{hint}</div></div></div>"])->textInput()->hint('KB') ?>
-    </div>
+    
     <?= $form->defaultButtons() ?>
   </div>
   <?php ActiveForm::end(); ?>

@@ -6,6 +6,8 @@ use Yii;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Feedback;
+use app\models\VisitorStat;
+use app\helpers\Util;
 
 class SiteController extends BaseController
 {
@@ -33,16 +35,6 @@ class SiteController extends BaseController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-                'maxLength' => 5,//最大显示个数
-                'minLength' => 4,//最少显示个数
-                'padding' => 2,//验证码字体大小，数值越小字体越大
-                'height' => 44,
-                'width' => 120,
-                'offset' => 4,//设置字符偏移量
-            ],
         ];
     }
 
@@ -57,27 +49,71 @@ class SiteController extends BaseController
     }
 
     /**
-     * Displays contact page.
+     * Displays Feedback page.
      *
      * @return Response|string
      */
     public function actionFeedback()
     {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new Feedback();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'Thank you for contacting us. We will respond to you as soon as possible.'));
-
-            return $this->redirect(Yii::$app->request->referrer);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return ['code' => 200, 'message' => Yii::t('app', 'Thank you for contacting us. We will respond to you as soon as possible.')];
         } else {
-            $tmp_error = $model->getFirstErrors();
-            foreach($model->activeAttributes() as $error) {
-                if(isset( $tmp_error[$error]) && !empty($tmp_error[$error])){
-                    Yii::$app->session->setFlash('error', $tmp_error[$error]);
-                }
-            }
-            
-            return $this->redirect(Yii::$app->request->referrer);
+            return ['code' => 0, 'message' => $model->getErrorMessage()];
         }
         
+    }
+    
+    /**
+     * 交互验证码.
+     *
+     * @return json
+     */
+    public function actionCaptcha()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $captcha = Yii::$app->getSecurity()->generateRandomString(16);
+        Yii::$app->session->set('verifyCode', $captcha);
+        return ['status' => 1, 'captcha' => $captcha];
+    }
+    
+    /**
+     * 访问统计
+     */
+    public function actionCount()
+    {
+        if (Util::checkRobot()){
+            $curTime = strtotime(date('Y-m-d'));
+            $platform = Util::isMobile() ? 'wap' : 'pc';
+            $cookies = Yii::$app->request->cookies;
+            $uuid = $cookies->getValue('FES_distinctid');
+            $userAgent = $_SERVER["HTTP_USER_AGENT"];
+            $userIP = Yii::$app->request->userIP;
+            $isCount = true;
+            if ($uuid) {
+                if (($visitor = VisitorStat::findOne(['uuid' => $uuid, 'created_at' => $curTime])) !== null){
+                    $visitor->updateCounters(['views' => 1]);
+                    $isCount = false;
+                }
+            } else {
+                $uuid = md5($userAgent.Yii::$app->security->generateRandomString());
+            }
+            if ($isCount) {
+                $model = new VisitorStat();
+                $model->uuid = $uuid;
+                $model->platform = $platform;
+                $model->ip = $userIP;
+                $model->created_at = $curTime;
+                $model->save(false);
+            }
+            
+            Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'FES_distinctid',
+                'value' => $uuid,
+                'expire' => time()+3600*24*365,
+                'httpOnly' => true,
+            ]));
+        }
     }
 }

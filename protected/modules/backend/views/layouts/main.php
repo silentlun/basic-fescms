@@ -23,7 +23,7 @@ AdminAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<div class="container-fluid">
+<div class="page-content">
     <?= $this->render('/widgets/_flash') ?>
     <?= $content ?>
 </div>

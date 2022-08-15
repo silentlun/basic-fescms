@@ -12,21 +12,21 @@ class AdminAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        //'http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700',
         'static/css/font-awesome.min.css',
-        'static/admin/plugins/toastr/toastr.min.css',
-        'static/admin/css/app.css',
-        'static/admin/plugins/sweetalert2.css',
+        'static/plugins/toastr/toastr.min.css',
+        'static/admin/css/style.css',
+        'static/admin/css/dark-layout.min.css',
     ];
     public $js = [
-        //'static/admin/js/jquery.slimscroll.min.js',
-        'static/admin/plugins/layer/layer.js',
-        'static/admin/plugins/toastr/toastr.min.js',
-        'static/admin/js/fesadmin.js',
+        'static/admin/js/metisMenu.min.js',
+        'static/admin/js/simplebar.min.js',
+        'static/plugins/sweetalert/sweetalert2.min.js',
+        'static/plugins/toastr/toastr.min.js',
         'static/admin/js/app.min.js',
-        'static/admin/plugins/sweetalert.min.js',
-        '//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js',
-        'static/admin/plugins/sweetalert-demo.js',
+        'static/admin/js/fesadmin.js',
+        
+        //'//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js',
+        'static/plugins/sweetalert/sweetalert-demo.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

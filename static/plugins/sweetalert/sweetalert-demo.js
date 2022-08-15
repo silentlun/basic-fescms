@@ -1,54 +1,43 @@
 $("#sa-success").click(function() {
-	Swal.fire({
+	//App.loading();
+	swal({
 		title: '操作成功',
 		type: 'success',
-		showConfirmButton: false
+		timer: 2000,
 	})
 })
 $("#sa-info").click(function() {
-	parent.swal({
+	swal({
 		title: '操作成功',
-		type: 'info'
+		type: 'info',
+		timer: 2000,
 	})
 })
 $("#sa-error").click(function() {
-	parent.swal({
+	swal({
 		title: '操作成功',
-		type: 'error'
+		type: 'error',
+		timer: 2000,
 	})
 })
 $("#sa-warning").click(function() {
 	swal(
 		'操作成功!',
-		'一个成功的提示!',
+		'一个成功的提示warning!',
 		'warning'
 	)
 })
 $("#sa-question").click(function() {
-	swal(
-		'操作成功!',
-		'一个成功的提示!',
-		'question'
-	)
-})
-$("#sa-title").click(function() {
-	parent.swal({
-		title: '再给我俩秒钟',
-		text: '2秒后关闭弹框',
-		timer: 2000
-	})
-})
-
-$("#sa-warning1").click(function() {
-	parent.swal({
+	swal({
 		title: '删除',
 		text: "你确定删除么?",
-		type: 'warning', //感叹号图标
+		type: 'question', //感叹号图标
+		showConfirmButton: true,
 		showCancelButton: true, //显示取消按钮
 		
-
+	
 	}).then(function() { //大部分，then是通用的回调函数
-		parent.swal(
+		swal(
 			'Deleted!',
 			'Your file has been deleted.',
 			'success'
@@ -57,7 +46,41 @@ $("#sa-warning1").click(function() {
 		// dismiss can be 'cancel', 'overlay',
 		// 'close', and 'timer'
 		if (dismiss === 'cancel') {
-			parent.swal(
+			swal(
+				'Cancelled',
+				'Your imaginary file is safe :)',
+				'error'
+			)
+		}
+	})
+})
+$("#sa-title").click(function() {
+	swal({
+		title: '再给我俩秒钟',
+		text: '2秒后关闭弹框',
+		timer: 2000
+	});
+})
+
+$("#sa-warning1").click(function() {
+	swal({
+		title: '删除',
+		text: "你确定删除么?",
+		type: 'warning', //感叹号图标
+		showCancelButton: true, //显示取消按钮
+		
+
+	}).then(function() { //大部分，then是通用的回调函数
+		swal(
+			'Deleted!',
+			'Your file has been deleted.',
+			'success'
+		)
+	}, function(dismiss) {
+		// dismiss can be 'cancel', 'overlay',
+		// 'close', and 'timer'
+		if (dismiss === 'cancel') {
+			swal(
 				'Cancelled',
 				'Your imaginary file is safe :)',
 				'error'
@@ -142,3 +165,4 @@ $("#form").click(function() {
 	})
 
 })
+//App.loading();

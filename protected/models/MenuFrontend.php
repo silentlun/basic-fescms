@@ -43,11 +43,11 @@ class MenuFrontend extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parentid', 'display', 'sort'], 'integer'],
+            [['parent_id', 'display', 'sort'], 'integer'],
             [['name', 'route'], 'required'],
             [['name', 'route'], 'trim'],
             [['name', 'route', 'target'], 'string', 'max' => 255],
-            [['parentid', 'sort'], 'default', 'value' => 0],
+            [['parent_id', 'sort'], 'default', 'value' => 0],
             ['display', 'default', 'value' => self::DISPLAY_YES],
             ['target', 'default', 'value' => '_self'],
         ];
@@ -60,7 +60,7 @@ class MenuFrontend extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'parentid' => Yii::t('app', 'Parentid'),
+            'parent_id' => Yii::t('app', 'Parentid'),
             'name' => Yii::t('app', 'Name'),
             'route' => '链接',
             'display' => '导航显示',

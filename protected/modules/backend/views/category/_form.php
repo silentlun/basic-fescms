@@ -3,8 +3,8 @@
 use backend\widgets\ActiveForm;
 //use yii\bootstrap4\ActiveForm;
 use app\helpers\Util;
-use app\helpers\Constants;
-$model->type = $model->type ? $model->type : 0;
+
+$model->type = $model->type ?: 0;
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
@@ -22,7 +22,7 @@ $model->type = $model->type ? $model->type : 0;
     
     <?= $form->field($model, 'type')->inline()->radioList($model::getTypeLabels()) ?>
 
-    <?= $form->field($model, 'parentid')->dropdownList($model::getCategoryTree(),['prompt'=>'作为一级菜单']);?>
+    <?= $form->field($model, 'parent_id')->dropdownList($model::getCategoryTree(),['prompt'=>'作为一级菜单']);?>
 
     <?= $form->field($model, 'catname')->textInput(['maxlength' => true]) ?>
 
@@ -33,14 +33,13 @@ $model->type = $model->type ? $model->type : 0;
 <div id="category-list-template" <?php if ($model->type == 1) echo 'style="display: none"';?>>
     
     
-    <?= $form->field($model, 'list_template')->dropdownList(Util::showTemplate('list'),['prompt'=>'选择模板']);?>
+    <?= $form->field($model, 'list_template')->dropdownList(Util::showTemplate('list'),['prompt'=>'默认模板']);?>
     
-    <?= $form->field($model, 'show_template')->dropdownList(Util::showTemplate('show'),['prompt'=>'选择模板']);?>
+    <?= $form->field($model, 'show_template')->dropdownList(Util::showTemplate('show'),['prompt'=>'默认模板']);?>
 </div>
 <div id="category-page-template" <?php if ($model->type == 0) echo 'style="display: none"';?>>
-    <?= $form->field($model, 'page_template')->dropdownList(Util::showTemplate('page'),['prompt'=>'选择模板']);?>
+    <?= $form->field($model, 'page_template')->dropdownList(Util::showTemplate('page'),['prompt'=>'默认模板']);?>
 </div>
-	<?= $form->field($model, 'ismenu')->inline()->radioList(Constants::getYesNoItems()) ?>
 	
     <?= $form->field($model, 'sort')->textInput() ?>
 

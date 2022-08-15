@@ -18,6 +18,12 @@ class m210316_072217_rbac_item_init extends Migration
         
         $this->batchInsert($authManager->itemTable, ['name', 'type', 'description', 'created_at', 'updated_at'],
             [
+                ['/backend/setting/manage', '2', '设置', '1586588064', '1586588064'],
+                ['/backend/content/manage', '2', '内容', '1586588064', '1586588064'],
+                ['/backend/menu/manage', '2', '菜单', '1586588064', '1586588064'],
+                ['/backend/admin/manage', '2', '权限', '1586588064', '1586588064'],
+                ['/backend/expand/manage', '2', '扩展', '1586588064', '1586588064'],
+                
                 ['/backend/attachment/index', '2', '附件管理', '1586588064', '1586588064'],
                 ['/backend/attachment/delete', '2', '删除附件', '1586588064', '1586588064'],
                 ['/backend/attachment/view-layer', '2', '查看附件', '1586588064', '1586588064'],
@@ -40,12 +46,12 @@ class m210316_072217_rbac_item_init extends Migration
                 ['/backend/category/delete', '2', '删除栏目', '1586588064', '1586588064'],
                 
                 
-                ['/backend/position/index', '2', '推荐位管理', '1586588064', '1586588064'],
-                ['/backend/position/create', '2', '添加推荐位', '1586588064', '1586588064'],
-                ['/backend/position/update', '2', '修改推荐位', '1586588064', '1586588064'],
-                ['/backend/position/delete', '2', '删除推荐位', '1586588064', '1586588064'],
-                ['/backend/position/data', '2', '推荐位信息管理', '1586588064', '1586588064'],
-                ['/backend/position/remove', '2', '删除推荐位信息', '1586588064', '1586588064'],
+                ['/backend/tag/index', '2', '推荐位管理', '1586588064', '1586588064'],
+                ['/backend/tag/create', '2', '添加推荐位', '1586588064', '1586588064'],
+                ['/backend/tag/update', '2', '修改推荐位', '1586588064', '1586588064'],
+                ['/backend/tag/delete', '2', '删除推荐位', '1586588064', '1586588064'],
+                ['/backend/tag/data', '2', '推荐位信息管理', '1586588064', '1586588064'],
+                ['/backend/tag/remove', '2', '删除推荐位信息', '1586588064', '1586588064'],
                 
                 ['/backend/menu/index', '2', '菜单管理', '1586588064', '1586588064'],
                 ['/backend/menu/create', '2', '添加菜单', '1586588064', '1586588064'],
@@ -68,7 +74,6 @@ class m210316_072217_rbac_item_init extends Migration
                 ['/backend/role/delete', '2', '删除角色', '1586588064', '1586588064'],
                 ['/backend/role/priv', '2', '角色权限设置', '1586588064', '1586588064'],
                 
-                ['/backend/expand/*', '2', '扩展', '1586588064', '1586588064'],
                 ['/backend/log/index', '2', '日志管理', '1586588064', '1586588064'],
                 ['/backend/log/view', '2', '查看日志', '1586588064', '1586588064'],
                 ['/backend/log/delete', '2', '删除日志', '1586588064', '1586588064'],

@@ -8,14 +8,14 @@
 if (Yii::$app->session->hasFlash('success')) {
     $info = addslashes( Yii::$app->session->getFlash('success') );
     $str = <<<EOF
-        swal({text:"{$info}",icon:'success',buttons: false,timer: 2000,});
+        swal({title:"{$info}",type:'success',timer: 2000,});
 EOF;
     $this->registerJs($str);
 }
 if (Yii::$app->session->hasFlash('error')) {
     $info = addslashes( Yii::$app->session->getFlash('error') );
     $str = <<<EOF
-        swal({text:"{$info}",icon:'error',buttons: false,timer: 2000,});
+        swal({title:"{$info}",type:'error',timer: 2000,});
 EOF;
     $this->registerJs($str);
 }

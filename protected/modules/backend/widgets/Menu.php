@@ -53,6 +53,7 @@ class Menu extends \yii\base\Widget
         } else {
             $items = $this->renderDropdown($items);
             $linkRoute = 'javascript:;';
+            $linkOptions = ['class' => 'has-arrow'];
         }
         
         return Html::a($this->dropDownCaret.$linkIcon.'<span>'.$item['name'].'</span>', $linkRoute, $linkOptions).$items;
@@ -71,11 +72,11 @@ class Menu extends \yii\base\Widget
         return strtr($this->subTemplate, ['{items}' => $lines]);
     }
     
-    protected function normalizeItems($parentid = 0)
+    protected function normalizeItems($parentId = 0)
     {
         $items = [];
         foreach ($this->items as $key => $item) {
-            if ($item['parentid'] != $parentid) continue;
+            if ($item['parent_id'] != $parentId) continue;
             $array['name'] = $item['name'];
             $array['route'] = [$item['route']];
             $array['icon'] = $item['icon'];

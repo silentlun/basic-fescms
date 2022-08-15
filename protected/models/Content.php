@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use app\helpers\Util;
+use yii\helpers\StringHelper;
 use app\behaviors\BlameablesBehavior;
 use silentlun\taggable\TaggableBehavior;
 use app\behaviors\AttachmentBehavior;
@@ -35,7 +35,6 @@ class Content extends \yii\db\ActiveRecord
     const STATUS_INACTIVE = 1;
     const STATUS_ACTIVE = 99;
     
-    public $linkurl;
     /**
      * {@inheritdoc}
      */
@@ -73,7 +72,11 @@ class Content extends \yii\db\ActiveRecord
             [['title', 'thumb', 'keywords', 'url'], 'string', 'max' => 100],
             [['keywords'], 'string', 'max' => 50],
             [['status'], 'default', 'value' => self::STATUS_ACTIVE],
-            [['tagValues', 'linkurl'], 'safe'],
+            ['url', 'required', 'when' => function($model) {
+                return $model->islink == 1;
+            }],
+            ['url', 'url'],
+            [['tagValues'], 'safe'],
         ];
     }
 
@@ -91,10 +94,11 @@ class Content extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'content' => Yii::t('app', 'Content'),
             'template' => Yii::t('app', 'Template'),
-            'tagValues' => Yii::t('app', 'Posids'),
+            'tagValues' => Yii::t('app', 'Tags'),
             'created_by' => Yii::t('app', 'Created By'),
-            'url' => Yii::t('app', 'Url'),
+            //'url' => Yii::t('app', 'Url'),
             'islink' => Yii::t('app', 'Islink'),
+            'url' => '转向链接',
             'views' => Yii::t('app', 'Views'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -145,7 +149,7 @@ class Content extends \yii\db\ActiveRecord
             if (isset($_POST['add_introduce']) && $this->description == '' && isset($this->content)) {
                 $content = stripslashes($this->content);
                 $introcude_length = intval($_POST['introcude_length']);
-                $this->description = Util::strCut(str_replace(array("'","\r\n","\t",'[page]','[/page]','&ldquo;','&rdquo;','&nbsp;'), '', strip_tags($content)),$introcude_length);
+                $this->description = StringHelper::truncate(str_replace(array("'","\r\n","\t",'[page]','[/page]','&ldquo;','&rdquo;','&nbsp;'), '', strip_tags($content)),$introcude_length, '');
             }
             
             //自动提取缩略图
@@ -162,15 +166,40 @@ class Content extends \yii\db\ActiveRecord
             return false;
         }
     }
-    public function afterSave($insert, $changedAttributes){
-        if ($this->islink) {
-            $this->url = $this->linkurl;
-        } else {
-            $this->url = \yii\helpers\Url::toRoute(['/content/view', 'id' => $this->id]);
-        }
-        self::updateAll(['url' => $this->url], ['id' => $this->id]);
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function getAllList($limit, $catId = null, $tagId = null)
+    {
+        $key = md5('content'.$limit.$catId.$tagId);
+        $contentDependency = new \yii\caching\DbDependency(['sql' => 'SELECT MAX(updated_at) FROM content']);
+        $datas = Yii::$app->cache->getOrSet($key, function () use ($limit, $catId, $tagId) {
+            $query = self::find()->select(['id', 'catid', 'title', 'thumb', 'url', 'islink', 'description', 'created_at']);
+            $query->where(['status' => self::STATUS_ACTIVE])
+            ->andFilterWhere(['catid' => $catId]);
+            if ($tagId) $query->anyTagValues($tagId);
+            return $query->limit($limit)->orderBy('sort DESC,id DESC')->asArray()->all();
+        }, 0, $contentDependency);
         
-        parent::afterSave($insert, $changedAttributes);
+        return $datas;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function getOneList($catId = null, $tagId = null, $category = false)
+    {
+        $query = self::find();
+        if ($category) $query->with('category');
+        $query->where(['status' => self::STATUS_ACTIVE])
+        ->andFilterWhere(['catid' => $catId]);
+        if ($tagId) $query->anyTagValues($tagId);
+        $query->limit(1)
+        ->orderBy('sort DESC,id DESC')
+        ->asArray()
+        ->one();
+        return $query;
     }
     
 }

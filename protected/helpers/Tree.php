@@ -24,7 +24,7 @@ class Tree {
     public function getChild($myid){
         $array = [];
         foreach ($this->arr as $id=>$a){
-            if ($a['parentid'] == $myid) $array[$id] = $a;
+            if ($a['parent_id'] == $myid) $array[$id] = $a;
         }
         return $array;
     }

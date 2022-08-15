@@ -72,5 +72,21 @@ class Link extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function getAllList($limit = null)
+    {
+        $key = 'link'.$limit;
+        $dependency = new \yii\caching\DbDependency(['sql' => 'SELECT MAX(updated_at) FROM link']);
+        $datas = Yii::$app->cache->getOrSet($key, function () use ($limit) {
+            $query = self::find()->where(['status' => self::STATUS_ACTIVE]);
+            if ($limit) $query->limit($limit);
+            return $query->orderBy('sort DESC,id DESC')->asArray()->all();
+        }, 0, $dependency);
+            
+        return $datas;
+    }
 
 }

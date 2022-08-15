@@ -95,8 +95,8 @@ class AdminController extends BaseController
         $model = Admin::findOne(['id' => Yii::$app->admin->identity->id]);
         $model->setScenario('self-update');
         if (Yii::$app->request->isPost) {
-            if ($model->load(Yii::$app->request->post()) && $model->selfUpdate()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Success'));
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
             } else {
                 $errors = $model->getErrors();
                 $err = '';
@@ -105,7 +105,6 @@ class AdminController extends BaseController
                 }
                 Yii::$app->session->setFlash('error', $err);
             }
-            $model = Admin::findOne(['id' => Yii::$app->getUser()->getIdentity()->getId()]);
         }
         
         return $this->render('update', [

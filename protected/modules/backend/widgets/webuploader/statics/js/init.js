@@ -21,8 +21,8 @@ var utils = {
 		//$.get('index.php?m=attachment&c=attachments&a=swfupload_json&aid='+id+'&src='+src+'&filename='+filename);
 		//$('#att-status_'+attid).append('|'+src);
 		//$('#att-name_'+attid).append('|'+filename);
-		$('#att-status_'+attid).append(src);
-		$('#att-name_'+attid).append(filename);
+		$('#att-status_'+attid).append('|'+src);
+		$('#att-name_'+attid).append('|'+filename);
 	},
 	set_frame:function(id,src){
 		$("#"+id).attr("src",src); 
@@ -92,6 +92,7 @@ jQuery(function() {
 			
 			    // WebUploader实例
 			    uploader,
+				fileNumLimit = config.fileNumLimit || 1,
 				acceptExtensions = config['acceptExtensions'] ? config['acceptExtensions'] : 'gif,jpg,jpeg,png';
 			
 			if ( !WebUploader.Uploader.support() ) {
@@ -119,23 +120,11 @@ jQuery(function() {
 				formData: config.formData||{},
 				fileVal: 'upload',
 				duplicate: true,
-			    fileNumLimit: config.multiple ? config.fileNumLimit : 1,
+			    fileNumLimit: fileNumLimit,
 				fileSizeLimit:config.fileSizeLimit ? config.fileSizeLimit : 200*1024*1024,
-			    fileSingleSizeLimit: config.fileSingleSizeLimit * 1024    ,// 50 M
+			    fileSingleSizeLimit: config.fileSingleSizeLimit * fileNumLimit * 1024    ,// 50 M
 				threads:1,
-				compress: {
-				    width: 800,
-				    height: 800,
-				    // 图片质量，只有type为`image/jpeg`的时候才有效。
-				    quality: 90,
-				    // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
-				    allowMagnify: false,
-				    // 是否允许裁剪。
-				    crop: false,
-				    // 是否保留头部meta信息。
-				    preserveHeaders: true,
-					compressSize:300*1024
-				}
+				compress: false,
 			});
 			uploader.addButton({
 			    id: '#filePickerBlock'
@@ -567,10 +556,39 @@ jQuery(function() {
                 return false;
             }
         }
+		function thumbImages() {
+			var in_content = $("#att-status_"+config['modal_id']).html().substring(1);
+			$('.modal-c').find('.modal-body').html('');
+			if(in_content=='') return false;
+			if($('#thumb_preview_' + config['modal_id'])) {
+				$('#thumb_preview_' + config['modal_id']).attr('src',in_content);
+			}
+			$('#thumb_input_' + config['modal_id']).val(in_content);
+			$('#upload_btn_' + config['modal_id']).hide();
+			$('#upload_box_' + config['modal_id']).show();
+		}
+		function changeMultifile(){
+			var in_content = $("#att-status_"+config['modal_id']).html().substring(1);
+			var in_filename = $("#att-name_"+config['modal_id']).html().substring(1);
+			$('.modal-c').find('.modal-body').html('');
+			var str = '';
+			var contents = in_content.split('|');
+			var filenames = in_filename.split('|');
+			console.log(contents)
+			console.log(filenames)
+			if(contents=='') return false;
+			$.each( contents, function(i, n) {
+				var ids = parseInt(Math.random() * 10000 + 10*i); 
+				var filename = filenames[i];
+				str += "<div id='multifile"+ids+"' class=\"multifile-item\"><input type='text' name='"+config['inputName']+"["+i+"][fileurl]' value='"+n+"' placeholder='下载地址' style='width:auto;flex:1' class='form-control'> <input type='text' name='"+config['inputName']+"["+i+"][filename]' value='"+filename+"' placeholder='附件说明' style='width:250px;' class='form-control'> <div class=\"operate\"><a class=\"btn btn-light btn-xs\" href=\"javascript:remove_div('multifile"+ids+"')\"><i class=\"fa fa-close\"></i>移除</a> </div></div>";
+			});
+			$('#multifiles_'+config['modal_id']).append(str);
+		}
+		
         // =====================================================================================
         $('.' + config['modal_id']).on('click', function () {
             chooseObject = $(this);
-            _modal.modal('show');
+            _modal.modal({keyboard: false,backdrop:'static'});
             _modal.find('.modal-body').html('');
             _modal.find('.modal-body').html(buildModalBody());
         });
@@ -591,26 +609,16 @@ jQuery(function() {
         });
         // 解决多modal下滚动以及filePicker失效问题
         $('#'+ config['modal_id']).on('hidden.bs.modal', function () {
-			var in_content = $("#att-status_"+config['modal_id']).html();
 			if($('.modal:visible').length) {
 			    $(document.body).addClass('modal-open');
 			}
-			$('.modal-c').find('.modal-body').html('');
-			//console.log(in_content);
-			if(in_content=='') return false;
-			/* if(!IsImg(in_content)) {
-				alert('选择的类型必须为图片类型');
-				return false;
-			} */
-			if($('#thumb_preview_' + config['modal_id'])) {
-				$('#thumb_preview_' + config['modal_id']).attr('src',in_content);
-			}
-			$('#thumb_input_' + config['modal_id']).val(in_content);
-            $('#upload_btn_' + config['modal_id']).hide();
-            $('#upload_box_' + config['modal_id']).show();
+			
+			var funcName = config['funcName'] || 'thumbImages';
+			eval(funcName+"()");
+			//$('.modal-c').find('.modal-body').html('');
         });
 		$(document).on('blur', '#netfile',function(){
-			var strs = $(this).val() ? $(this).val() :'';
+			var strs = $(this).val() ? '|'+ $(this).val() :'';
 			$("#att-status_"+config['modal_id']).html(strs);
 		})
     };

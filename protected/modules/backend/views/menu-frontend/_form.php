@@ -17,7 +17,7 @@ use app\helpers\Constants;
   <div class="card-body">
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'parentid')->dropdownList($model::getMenuTree(),['prompt'=>'作为一级菜单']);?>
+    <?= $form->field($model, 'parent_id')->dropdownList($model::getMenuTree(),['prompt'=>'作为一级菜单']);?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

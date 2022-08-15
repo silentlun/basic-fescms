@@ -280,4 +280,33 @@ class Util
         return $thumb ? $thumb : Yii::getAlias('@web/').'statics/images/nopic.jpg';
     }
     
+    /**
+     * 判断搜索引擎蜘蛛
+     */
+    public static function checkRobot() {
+        static $kw_spiders = array('bot', 'crawl', 'spider' ,'slurp', 'sohu-search', 'lycos', 'robozilla');
+        static $kw_browsers = array('msie', 'netscape', 'opera', 'konqueror', 'mozilla');
+        
+        $useragent = strtolower($_SERVER['HTTP_USER_AGENT']);
+        if(self::dstrpos($useragent, $kw_spiders)) return false;
+        return true;
+    }
+    public static function dstrpos($string, $arr) {
+        if(empty($string)) return false;
+        foreach((array)$arr as $v) {
+            if(strpos($string, $v) !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * 内容链接转换
+     */
+    public static function toViewUrl($item, $route = 'content/view', $scheme = false)
+    {
+        return $item['islink'] == 1 ? $item['url'] : \yii\helpers\Url::toRoute([$route, 'id' => $item['id']], $scheme);
+    }
+    
 }

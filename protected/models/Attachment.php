@@ -101,17 +101,16 @@ class Attachment extends \yii\db\ActiveRecord
             $attachment->update();
             $customer = new AttachmentIndex();
             $customer->keyid = $keyid;
-            $customer->aid = "{$_v['aid']}";
+            $customer->aid = $_v['aid'];
             $customer->save();
         }
-        $cookies = Yii::$app->response->cookies;
-        $cookies->remove('att_json');
+        Yii::$app->response->cookies->remove('att_json');
         return true;
     }
     public static function apiDelete($keyid)
     {
         
-        $infos = AttachmentIndex::find()->where(['keyid' => $keyid])->all();
+        $infos = AttachmentIndex::find()->where(['keyid' => $keyid])->asArray()->all();
         if ($infos) {
             foreach ($infos as $r){
                 self::findOne($r['aid'])->delete();
@@ -127,9 +126,9 @@ class Attachment extends \yii\db\ActiveRecord
     public function afterDelete()
     {
         $image = Yii::getAlias('@uploads/') . $this->filepath;
-        unlink($image);
+        @unlink($image);
         $thumbs = glob(dirname($image).'/*'.basename($image));
-        if($thumbs) foreach($thumbs as $thumb) unlink($thumb);
+        if($thumbs) foreach($thumbs as $thumb) @unlink($thumb);
         return parent::afterDelete();
     }
 }

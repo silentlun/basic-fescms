@@ -26,7 +26,7 @@ class ActionColumn extends \yii\grid\ActionColumn
             $this->headerOptions['width'] = $this->width;
         }
         $this->headerOptions['class'] = 'text-center';
-        $this->contentOptions = ['class' => 'text-right'];
+        $this->contentOptions = ['class' => 'text-right text-nowrap'];
     }
     
     protected function initDefaultButtons()
@@ -65,7 +65,7 @@ class ActionColumn extends \yii\grid\ActionColumn
         if (!isset($this->buttons['delete'])) {
             $this->buttons['delete'] = function ($url, $model, $key) {
                 $data = ['id' => $key];
-                return Html::a('<i class="fa fa-ban"></i> '.Yii::t('app', 'Delete'), $url, [
+                return Html::a('<i class="fa fa-trash-o"></i> '.Yii::t('app', 'Delete'), $url, [
                     'class' => 'btn btn-danger btn-xs',
                     'title' => Yii::t('app', 'Delete'),
                     'data' => [

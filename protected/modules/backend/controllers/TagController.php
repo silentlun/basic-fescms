@@ -10,7 +10,7 @@ use backend\actions\UpdateAction;
 use backend\actions\DeleteAction;
 use backend\actions\SortAction;
 use app\models\Content;
-use backend\models\PushPositionForm;
+use backend\models\PushTagForm;
 
 /**
  * TagController implements the CRUD actions for Tag model.
@@ -81,24 +81,22 @@ class TagController extends BaseController
     
     public function actionPush()
     {
-        $model = new PushPositionForm();
+        $model = new PushTagForm();
         $model->ids = Yii::$app->request->get('ids');
         $module = Yii::$app->request->get('module');
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
-            //$content = new Content();
-            //$content->pushPosition($model);
             $ids = explode(',', $model->ids);
             $contents = Content::find()->where(['in', 'id', $ids])->all();
             foreach ($contents as $content) {
-                $content->tagValues = $model->posid;
+                $content->tagValues = $model->tag_id;
                 $content->save();
             }
             Yii::$app->session->setFlash('success', Yii::t('app', 'Operation Success'));
             return $this->goBack();
         }
         Yii::$app->user->setReturnUrl(Yii::$app->request->referrer);
-        return $this->render('push', [
+        return $this->renderAjax('push', [
             'model' => $model,
             'module' => $module,
         ]);

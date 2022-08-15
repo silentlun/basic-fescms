@@ -67,7 +67,7 @@ class Admin extends ActiveRecord implements IdentityInterface
             [['username'], 'match', 'pattern'=>'/^[\x{4e00}-\x{9fa5}A-Za-z0-9_]+$/u'],
             [['email'], 'email'],
             [['password'], 'required','on'=>['login','create']],
-            [['password', 'repassword', 'old_password'], 'required','on'=>['self-update']],
+            //[['password', 'repassword', 'old_password'], 'required','on'=>['self-update']],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['prev_login_ip', 'last_login_ip'], 'string', 'max' => 15],
@@ -85,7 +85,7 @@ class Admin extends ActiveRecord implements IdentityInterface
             'default' => ['username', 'password'],
             'create' => ['username', 'email', 'password', 'status', 'roles'],
             'update' => ['username', 'email', 'password', 'status', 'roles'],
-            'self-update' => ['email', 'password', 'old_password', 'repassword'],
+            'self-update' => ['email', 'password'],
         ];
     }
     

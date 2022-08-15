@@ -7,6 +7,7 @@ use backend\assets\AdminAsset;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\captcha\Captcha;
+use yii\helpers\Url;
 
 AdminAsset::register($this);
 
@@ -22,7 +23,7 @@ $this->title = '登录-FesAdmin';
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <style>html,body {height: 100%}</style>
+    <style>html,body {height: 100%}.invalid-feedback{display: block;}</style>
     
 </head>
 <body class="pace-top login-bg">
@@ -34,8 +35,11 @@ $this->title = '登录-FesAdmin';
 </div>
 <div class="d-flex justify-content-center align-items-center h-100" class="fade">
   <div class="login login-v2" data-pageload-addclass="animated fadeIn">
-    <div class="login-header">
-      <div class="brand"> <span class="logo"></span> FesAdmin <small>快速、高效、安全的WEB管理系统</small> </div>
+    <div class="login-header d-flex">
+      <div class="brand flex-grow-1"> 
+      <div class="d-flex align-items-center">
+<span class="logo"></span> FesAdmin
+</div><small>快速、高效、安全的WEB管理系统</small> </div>
       <div class="icon"> <i class="fa fa-sign-in"></i> </div>
     </div>
     <div class="login-content">
@@ -43,7 +47,7 @@ $this->title = '登录-FesAdmin';
         <?= $form->field($model, 'username')->label(false)->textInput(['class' => 'form-control input-lg form-control-lg', 'placeholder' => '管理账号']) ?>
         <?= $form->field($model, 'password')->label(false)->passwordInput(['class' => 'form-control input-lg form-control-lg', 'placeholder' => '账号密码']) ?>
         <?= $form->field($model, 'verifyCode')->label(false)->widget(Captcha::className(), [
-            'captchaAction' => '/site/captcha',
+            'captchaAction' => 'site/captcha',
             'template' => '<div class="row"><div class="col-6">{input}</div><div class="col-6">{image}</div></div>',
             'options' => [
                 'class' => 'form-control input-lg',

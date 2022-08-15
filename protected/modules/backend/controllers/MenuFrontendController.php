@@ -5,9 +5,10 @@ namespace backend\controllers;
 use Yii;
 use app\models\MenuFrontend;
 use yii\data\ArrayDataProvider;
+use backend\actions\CreateAction;
+use backend\actions\UpdateAction;
 use backend\actions\DeleteAction;
 use backend\actions\SortAction;
-use backend\actions\UpdateAction;
 
 /**
  * MenuFrontendController implements the CRUD actions for MenuFrontend model.
@@ -35,23 +36,14 @@ class MenuFrontendController extends BaseController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id = 0)
-    {
-        $model = new MenuFrontend();
-        $model->parentid = $id;
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
     public function actions()
     {
         return [
+            'create' => [
+                'class' => CreateAction::className(),
+                'modelClass' => MenuFrontend::className(),
+                'parentId' => Yii::$app->request->get('id'),
+            ],
             'update' => [
                 'class' => UpdateAction::className(),
                 'modelClass' => MenuFrontend::className(),

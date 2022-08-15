@@ -17,14 +17,14 @@ use backend\widgets\ActiveForm;
       'fieldConfig' => [
           'template' => "{input}\n{hint}\n{error}",
       ],
-      'fieldClass' => 'backend\widgets\ActiveField',
+      'layout' => 'default',
   ]); ?>
   <div class="modal-body">
-    <?= $form->field($model, 'posid')->checkboxList(\app\models\Tag::getTags()) ?>
+    <?= $form->field($model, 'tag_id')->checkboxList(\app\models\Tag::getTags()) ?>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-    <button type="submit" class="btn btn-primary">保存</button>
+    <button type="submit" class="btn btn-primary">确定</button>
   </div>
   <?php ActiveForm::end(); ?>
 

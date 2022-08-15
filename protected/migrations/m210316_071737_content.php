@@ -15,7 +15,7 @@ class m210316_071737_content extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB';
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
         
         $this->createTable(self::TBL_NAME, [
@@ -37,10 +37,19 @@ class m210316_071737_content extends Migration
             'updated_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
         $this->createIndex('idx-catid', self::TBL_NAME, 'catid,status,sort,id');
+        
+        //附表
+        $this->createTable('{{%content_news}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull()->unique(),
+            'content' => 'mediumtext NOT NULL',
+            'template' => $this->string(100)->notNull()->defaultValue(''),
+        ], $tableOptions);
     }
     
     public function safeDown()
     {
         $this->dropTable(self::TBL_NAME);
+        $this->dropTable('{{%content_news}}');
     }
 }

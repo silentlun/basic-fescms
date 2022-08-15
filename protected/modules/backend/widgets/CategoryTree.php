@@ -26,7 +26,7 @@ class CategoryTree extends Widget
     public function getChild($myid){
         $sublist = '';
         foreach ($this->data as $id => $v){
-            if ($v['parentid'] != $myid) continue;
+            if ($v['parent_id'] != $myid) continue;
             $child = $this->getChild($id);
             if ($child) {
                 $label = Html::tag('span', $v['catname'], ['class' => 'folder']) . $child;

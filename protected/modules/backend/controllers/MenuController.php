@@ -41,6 +41,7 @@ class MenuController extends BaseController
             'create' => [
                 'class' => CreateAction::className(),
                 'modelClass' => Menu::className(),
+                'parentId' => Yii::$app->request->get('id'),
             ],
             'update' => [
                 'class' => UpdateAction::className(),

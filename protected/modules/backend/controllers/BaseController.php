@@ -30,14 +30,12 @@ class BaseController extends Controller
                     'backend/setting/custom-update',
                     'backend/setting/custom-delete',
                     'backend/admin/update-self',
-                    'backend/attachment/upload',
-                    'backend/attachment/album',
                     'backend/category/treeview',
                     'backend/tag/push',
                     'backend/tag/data',
                     'backend/page/*',
                     'backend/clear/*',
-                    'backend/assets/*',
+                    'backend/attachment/*',
                     'backend/debug/*',
                     'backend/gii/*',
                 ],
@@ -92,5 +90,29 @@ class BaseController extends Controller
                 Yii::$app->end();
             }
         }
+    }
+    
+    /**
+     * 获取指定日期段内每一天的日期
+     * @param  Date  $startdate 开始日期
+     * @param  Date  $enddate   结束日期
+     * @return Array
+     */
+    protected function getDateFromRange($startDate, $endDate){
+        
+        $stimestamp = strtotime($startDate);
+        $etimestamp = strtotime($endDate);
+        
+        // 计算日期段内有多少天
+        $days = ($etimestamp-$stimestamp)/86400+1;
+        
+        // 保存每天日期
+        $date = [];
+        
+        for($i=0; $i<$days; $i++){
+            $date[] = date('Y-m-d', $stimestamp+(86400*$i));
+        }
+        
+        return $date;
     }
 }

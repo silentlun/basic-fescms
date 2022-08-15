@@ -10,11 +10,14 @@ use yii\helpers\Html;
 use yii\bootstrap4\Breadcrumbs;
 
 ?>
-<div class="content-header">
-	<?= Breadcrumbs::widget([
+<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+    <h4 class="mb-sm-0"><?= Html::encode($this->title) ?></h4>
+    <div class="page-title-right">
+        <?= Breadcrumbs::widget([
         'homeLink' => false,
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ])
     ?>
-	<h1 class="page-header"><?= Html::encode($this->title) ?></h1>
+    </div>
+
 </div>

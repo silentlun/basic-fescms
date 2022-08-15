@@ -44,18 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => '栏目类型',
                 'format' => 'raw',
                 'value'  => function($model){
-                return $model['type'] ? '<span class="text-info">单网页</span>' : '内部栏目';
+                return $model['type'] ? '<span class="text-primary">单网页</span>' : '内部栏目';
             }
             ],
             'catdir:text:目录',
-            [
-                'attribute' => 'ismenu',
-                'header' => '导航显示',
-                'format' => 'raw',
-                'value'  => function($model){
-                return Constants::getShowHideItems($model['ismenu']);;
-            }
-            ],
+            
 
             [
                 'class' => 'backend\components\grid\ActionColumn',

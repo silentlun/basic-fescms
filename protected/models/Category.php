@@ -54,10 +54,9 @@ class Category extends \yii\db\ActiveRecord
             [['catname', 'catdir'], 'required'],
             [['catname', 'catdir'], 'trim'],
             [['catname', 'catdir'], 'string', 'max' => 30],
-            [['parentid', 'type', 'sort', 'ismenu'], 'integer'],
-            [['parentid', 'type', 'sort'], 'default', 'value' => 0],
-            [['image', 'category_template', 'list_template', 'show_template', 'page_template'], 'string', 'max' => 255],
-            ['ismenu', 'default', 'value' => self::MENU_ACTIVE],
+            [['parent_id', 'type', 'sort'], 'integer'],
+            [['parent_id', 'type', 'sort'], 'default', 'value' => 0],
+            [['image', 'category_template', 'list_template', 'show_template', 'page_template'], 'string', 'max' => 100],
         ];
     }
 
@@ -69,7 +68,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             'catid' => Yii::t('app', 'Catid'),
             'type' => Yii::t('app', 'Category Type'),
-            'parentid' => Yii::t('app', 'Parentid'),
+            'parent_id' => Yii::t('app', 'Parentid'),
             'catname' => Yii::t('app', 'Catname'),
             'catdir' => Yii::t('app', 'Catdir'),
             'category_template' => Yii::t('app', 'Category Template'),
@@ -77,7 +76,7 @@ class Category extends \yii\db\ActiveRecord
             'show_template' => Yii::t('app', 'Show Template'),
             'page_template' => Yii::t('app', 'Page Template'),
             'sort' => Yii::t('app', 'Sort'),
-            'image' => '上传图片',
+            'image' => '栏目图片',
             'ismenu' => '导航显示',
         ];
     }
@@ -90,9 +89,9 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
     
-    protected static function _getCategory($parentid = null, $ismenu = null){
+    protected static function _getCategory($parentId = null, $ismenu = null){
         $query = self::find();
-        $query->andFilterWhere(['parentid' => $parentid]);
+        $query->andFilterWhere(['parent_id' => $parentId]);
         $query->andFilterWhere(['ismenu' => $ismenu]);
         return $query->orderBy('sort asc,id asc')->indexBy('id')->asArray()->all();
     }
@@ -128,6 +127,30 @@ class Category extends \yii\db\ActiveRecord
         $treeObj->icon = ['&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ '];
         $treeObj->nbsp = '&nbsp&nbsp&nbsp';
         return $treeObj->getGridTree(0, 'catname');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return $this->hasOne(self::className(), ['id' => 'parent_id']);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeSave($insert){
+        if (!$this->isNewRecord){
+            $oldImage = $this->getOldAttribute('image');
+            if ($oldImage && $this->image != $oldImage) {
+                $filePath = str_replace(Yii::$app->config->site_upload_url, '', $oldImage);
+                $attachment = Attachment::findOne(['filepath' => $filePath]);
+                AttachmentIndex::deleteAll(['aid' => $attachment->id]);
+                $attachment->delete();
+            }
+        }
+        return parent::beforeSave($insert);
     }
 
 }

@@ -24,6 +24,11 @@ class LinkController extends BaseController
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Link::find(),
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
         ]);
 
         return $this->render('index', [

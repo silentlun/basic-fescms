@@ -20,7 +20,7 @@ class Bar extends Widget
     public $options = [
         'class' => 'mail-tools tooltip-demo',
     ];
-    public $template = "{create} {listorder} {delete}";
+    public $template = "{create} {sort} {delete}";
     
     public $catid = null;
     public $module = null;
@@ -71,9 +71,9 @@ class Bar extends Widget
      */
     protected function initDefaultButtons()
     {
-        if (! isset($this->buttons['listorder'])) {
+        if (! isset($this->buttons['sort'])) {
             $this->buttons['listorder'] = function () {
-                return Html::a('<i class="fa fa-refresh"></i> ' . Yii::t('app', 'Listorder'), Url::to(['sort']), [
+                return Html::a('<i class="fa fa-refresh"></i> ' . Yii::t('app', 'Listorder'), ['sort'], [
                     'title' => Yii::t('app', 'Refresh'),
                     'data-pjax' => '0',
                     'class' => 'btn btn-warning m-r-5 listorder',
@@ -93,7 +93,7 @@ class Bar extends Widget
 
         if (! isset($this->buttons['delete'])) {
             $this->buttons['delete'] = function () {
-                return Html::a('<i class="fa fa-trash-o"></i> ' . Yii::t('app', 'Delete'), Url::to(['delete']), [
+                return Html::a('<i class="fa fa-trash-o"></i> ' . Yii::t('app', 'Delete'), ['delete'], [
                     'title' => Yii::t('app', 'Delete'),
                     'data-pjax' => '0',
                     'data-confirm' => Yii::t('app', 'Really to delete?'),
@@ -104,7 +104,7 @@ class Bar extends Widget
         
         if (! isset($this->buttons['address'])) {
             $this->buttons['address'] = function () {
-                return Html::a('<i class="fa fa-random"></i> ' . Yii::t('app', 'Attachment address'), Url::to(['address']), [
+                return Html::a('<i class="fa fa-random"></i> ' . Yii::t('app', 'Attachment address'), ['address'], [
                     'title' => Yii::t('app', 'Attachment address'),
                     'data-pjax' => '0',
                     'class' => 'btn btn-info m-r-5',

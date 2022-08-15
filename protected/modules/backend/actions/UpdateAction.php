@@ -20,9 +20,7 @@ class UpdateAction extends Action
         $model = $this->getModel();
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            
             Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
-            //return $this->redirect(['index', 'eventid' => $model->event_id]);
             return $this->controller->goBack();
         }
         Yii::$app->user->setReturnUrl(Yii::$app->request->referrer);

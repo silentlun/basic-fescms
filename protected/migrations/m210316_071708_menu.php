@@ -15,28 +15,28 @@ class m210316_071708_menu extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB';
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
         
         $this->createTable(self::TBL_NAME, [
             'id' => $this->primaryKey()->unsigned(),
-            'name' => $this->string()->notNull(),
-            'parentid' => $this->integer()->unsigned()->notNull()->defaultValue(0),
-            'route' => $this->string()->notNull(),
-            'data' => $this->string()->notNull()->defaultValue(''),
-            'icon' => $this->string()->notNull(),
+            'name' => $this->string(100)->notNull(),
+            'parent_id' => $this->integer()->unsigned()->notNull()->defaultValue(0),
+            'route' => $this->string(100)->notNull(),
+            'data' => $this->string(100)->notNull()->defaultValue(''),
+            'icon' => $this->string(20)->notNull(),
             'sort' => $this->integer()->unsigned()->notNull()->defaultValue(0),
-            'display' => $this->smallInteger()->unsigned()->notNull()->defaultValue(0),
+            'display' => $this->tinyInteger(1)->unsigned()->notNull()->defaultValue(0),
         ], $tableOptions);
         $this->createIndex('idx-display', '{{%menu}}', 'display,sort,id');
         //添加数据
-        $this->batchInsert('{{%menu}}', ['id', 'name', 'parentid', 'route', 'data', 'icon', 'sort', 'display'],
+        $this->batchInsert('{{%menu}}', ['id', 'name', 'parent_id', 'route', 'data', 'icon', 'sort', 'display'],
             [
-                ['1', '设置', '0', '/backend/setting/index', '', 'fa-cog', '1', '1'],
-                ['2', '内容', '0', '/backend/content/index', '', 'fa-edit', '2', '1'],
-                ['3', '菜单', '0', '/backend/menu/index', '', 'fa-th-large', '3', '1'],
-                ['4', '权限', '0', '/backend/admin/index', '', 'fa-key', '4', '1'],
-                ['5', '扩展', '0', '/backend/expand/*', '', 'fa-cube', '5', '1'],
+                ['1', '设置', '0', '/backend/setting/manage', '', 'fa-cog', '1', '1'],
+                ['2', '内容', '0', '/backend/content/manage', '', 'fa-edit', '2', '1'],
+                ['3', '菜单', '0', '/backend/menu/manage', '', 'fa-th-large', '3', '1'],
+                ['4', '权限', '0', '/backend/admin/manage', '', 'fa-key', '4', '1'],
+                ['5', '扩展', '0', '/backend/expand/manage', '', 'fa-cube', '5', '1'],
                 
                 
                 ['11', '网站设置', '1', '/backend/setting/index', '', '', '0', '1'],
@@ -61,12 +61,12 @@ class m210316_071708_menu extends Migration
                 ['29', '删除缩略图', '25', '/backend/attachment/thumbdelete', '', '', '0', '0'],
                 ['30', '附件地址替换', '25', '/backend/attachment/address', '', '', '0', '0'],
                 
-                ['31', '推荐位管理', '2', '/backend/position/index', '', '', '0', '1'],
-                ['32', '添加推荐位', '31', '/backend/position/create', '', '', '0', '0'],
-                ['33', '修改推荐位', '31', '/backend/position/update', '', '', '0', '0'],
-                ['34', '删除推荐位', '31', '/backend/position/delete', '', '', '0', '0'],
-                ['35', '信息管理', '31', '/backend/position/data', '', '', '0', '0'],
-                ['36', '删除信息', '31', '/backend/position/remove', '', '', '0', '0'],
+                ['31', '推荐位管理', '2', '/backend/tag/index', '', '', '0', '1'],
+                ['32', '添加推荐位', '31', '/backend/tag/create', '', '', '0', '0'],
+                ['33', '修改推荐位', '31', '/backend/tag/update', '', '', '0', '0'],
+                ['34', '删除推荐位', '31', '/backend/tag/delete', '', '', '0', '0'],
+                ['35', '信息管理', '31', '/backend/tag/data', '', '', '0', '0'],
+                ['36', '删除信息', '31', '/backend/tag/remove', '', '', '0', '0'],
                 
                 ['37', '管理员管理', '4', '/backend/admin/index', '', '', '0', '1'],
                 ['38', '添加管理员', '37', '/backend/admin/create', '', '', '0', '0'],

@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
             ],
             [
                 'attribute' => 'status',
+                'format' => 'raw',
                 'value'  => function($model){
                 return Constants::getShowHideItems($model->status);
             }

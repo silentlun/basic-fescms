@@ -32,22 +32,18 @@ class DeleteAction extends Action {
             if (is_array($ids)){
                 foreach ($ids as $id){
                     $model = call_user_func([$this->modelClass, 'findOne'], $id);
-                    if (!$model->delete()){
-                        $errorIds[] = $id;
-                    }
+                    $model->delete();
                 }
             }else{
                 $model = call_user_func([$this->modelClass, 'findOne'], $ids);
-                if (!$model->delete()){
-                    $errorIds[] = $ids;
-                }
+                $model->delete();
             }
         }
         if ($request->isAjax){
             \Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['code' => 200, 'message' => Yii::t('app', 'Success')];
+            return ['code' => 200, 'message' => Yii::t('app', 'Delete Success')];
         }else{
-            Yii::$app->session->setFlash('success', Yii::t('app', 'Operation Success'));
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Delete Success'));
             return $this->controller->redirect(Yii::$app->request->referrer);
         }
         

@@ -15,6 +15,8 @@ class CreateAction extends Action
     public $model = null;
     public $modelClass;
     
+    public $parentId = null;
+    
     public function run()
     {
         $model = $this->getModel();
@@ -37,6 +39,7 @@ class CreateAction extends Action
                 'class' => $this->modelClass,
             ]);
         }
+        if ($this->parentId) $model->parent_id = $this->parentId;
         return $model;
     }
 }

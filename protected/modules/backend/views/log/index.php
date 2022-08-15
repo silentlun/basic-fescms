@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use backend\components\grid\GridView;
 use yii\widgets\Pjax;
 use backend\widgets\Bar;
-use common\helpers\Util;
+use app\helpers\Util;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -33,7 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'route',
             [
                 'attribute' => 'description',
+                'width' => '',
                 'format' => 'html',
+                'contentOptions' => ['class' => 'text-break'],
                 'value' => function ($model, $key, $index, $column) {
                 return Util::strCut($model->description, 200);
             }
@@ -46,7 +48,19 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'backend\components\grid\ActionColumn',
                 'headerOptions' => ['width' => 150],
-                'template' => '{view-layer} {delete}',
+                'buttons' => [
+                    'view' => function($url, $model, $key){
+                    return Html::a('<i class="fa fa-eye"></i> '.Yii::t('app', 'View'), $url, [
+                        'class' => 'btn btn-info btn-xs',
+                        'title' => Yii::t('app', 'View'),
+                        'data-toggle' => 'modal',
+                        'data-target' => '#ajaxModalLg',
+                        'data-remote' => $url,
+                        'data-pjax' => '0'
+                    ]);
+                    }
+                ],
+                'template' => '{view} {delete}',
             ],
         ],
     ]); ?>

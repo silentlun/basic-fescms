@@ -13,7 +13,7 @@ $config = [
     ],
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'csrfParam' => '_csrf-token',
             'cookieValidationKey' => '-FUl386iUDZg2DzZEepyFbanSmQvERMl',
         ],
         'cache' => [
@@ -34,6 +34,7 @@ $config = [
             'loginUrl' => ['/backend/site/login'],
             'identityCookie' => ['name' => '__admin_identity', 'httpOnly' => true],
             'idParam' => '__admin',
+            'as afterLogin' => 'backend\behaviors\AfterLoginBehavior',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -51,6 +52,9 @@ $config = [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error'],
+                    'except' => [
+                        'yii\web\HttpException:404',
+                    ],
                 ],
             ],
         ],
@@ -68,7 +72,6 @@ $config = [
                 '<alias:feedback|captcha>' => 'site/<alias>',
                 '<modules:backend>' => '<modules>/site/index',
                 '<modules>/<alias:index|login|logout>' => '<modules>/site/<alias>',
-                'contest' => 'contest/index',
                 '<catdir>' => 'content/index',
                 'detail/<id:\d+>' => 'content/view',
                 
@@ -77,6 +80,7 @@ $config = [
         ],
        
     ],
+    'on beforeRequest' => [app\components\Config::className(), 'backendInit'],
     'params' => $params,
     'modules' => [
         'backend' => [

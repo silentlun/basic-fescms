@@ -28,11 +28,11 @@ class AppAsset extends AssetBundle
     public $js = [
         "static/js/jquery-core-plugins.js",
         "static/js/jquery.validate.min.js",
-        "static/js/sweetalert.min.js",
+        "static/plugins/sweetalert/sweetalert.min.js",
         'static/js/app.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
+        //'yii\web\YiiAsset',
         'yii\bootstrap4\BootstrapAsset',
         'yii\bootstrap4\BootstrapPluginAsset',
     ];

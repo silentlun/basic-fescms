@@ -19,8 +19,8 @@ $this->params['breadcrumbs'][] = '基本设置';
         'options' => ['class' => 'form-horizontal none-loading'],
       'enableAjaxValidation' => true,
     ]); ?>
-  <div class="tab-content">
-    <div class="tab-pane fade show active" id="web">
+  <div class="card-body">
+    
       <?= $form->field($model, 'site_title')->textInput() ?>
       <?= $form->field($model, 'site_url')->textInput() ?>
       <?= $form->field($model, 'site_keywords')->textInput() ?>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = '基本设置';
       <?= $form->field($model, 'site_icp')->textInput() ?>
       <?= $form->field($model, 'site_statics_script')->textarea(['rows' => '6']) ?>
       <?= $form->field($model, 'site_status')->inline()->radioList(['1'=>'正常','0'=>'关闭']) ?>
-    </div>
+    
     <?= $form->defaultButtons() ?>
   </div>
   <?php ActiveForm::end(); ?>

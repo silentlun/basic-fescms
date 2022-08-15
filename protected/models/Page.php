@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\behaviors\AttachmentBehavior;
 
 /**
  * This is the model class for table "{{%page}}".
@@ -23,6 +24,16 @@ class Page extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%page}}';
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'attachment' => [
+                'class' => AttachmentBehavior::className(),
+                'module' => 'page',
+            ],
+        ];
     }
 
     /**
@@ -48,17 +59,5 @@ class Page extends \yii\db\ActiveRecord
             'title' => Yii::t('app', 'Title'),
             'content' => Yii::t('app', 'Content'),
         ];
-    }
-    
-    public function afterSave($insert, $changedAttributes){
-        Attachment::apiUpdate('page-'.$this->id);
-        
-        parent::afterSave($insert, $changedAttributes);
-    }
-    
-    public function afterDelete()
-    {
-        parent::afterDelete();
-        Attachment::apiDelete('page-'.$this->id);
     }
 }

@@ -15,7 +15,7 @@ class m210316_071636_attachment extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB';
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
         
         $this->createTable(self::TBL_NAME, [
@@ -25,7 +25,7 @@ class m210316_071636_attachment extends Migration
             'filepath' => $this->string(100)->notNull(),
             'filesize' => $this->integer()->unsigned()->notNull()->defaultValue(0),
             'fileext' => $this->string(15)->notNull(),
-            'username' => $this->string(20)->notNull()->defaultValue(''),
+            'created_by' => $this->string(20)->notNull()->defaultValue(''),
             'isimage' => $this->tinyInteger(2)->unsigned()->notNull()->defaultValue(0),
             'status' => $this->tinyInteger(2)->unsigned()->notNull()->defaultValue(0),
             'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),

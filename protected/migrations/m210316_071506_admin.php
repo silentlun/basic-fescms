@@ -15,7 +15,7 @@ class m210316_071506_admin extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB';
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
         
         $this->createTable(self::TBL_NAME, [
@@ -23,7 +23,7 @@ class m210316_071506_admin extends Migration
             'username' => $this->string(20)->notNull()->unique(),
             'auth_key' => $this->string(32)->notNull()->defaultValue(''),
             'password_hash' => $this->string()->notNull(),
-            'email' => $this->string(50)->notNull()->unique(),
+            'email' => $this->string(50)->notNull()->defaultValue(''),
             'prev_login_time' => $this->integer()->unsigned()->notNull()->defaultValue(0),
             'prev_login_ip' => $this->string(15)->notNull()->defaultValue(''),
             'last_login_time' => $this->integer()->unsigned()->notNull()->defaultValue(0),

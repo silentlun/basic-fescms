@@ -10,9 +10,9 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 
-class PushPositionForm extends Model
+class PushTagForm extends Model
 {
-    public $posid;
+    public $tag_id;
     public $ids;
     
     /**
@@ -21,7 +21,7 @@ class PushPositionForm extends Model
     public function rules()
     {
         return [
-            [['posid'], 'required', 'message' => '请选择推荐位'],
+            [['tag_id'], 'required', 'message' => '请选择推荐位'],
         ];
     }
     
@@ -31,7 +31,7 @@ class PushPositionForm extends Model
     public function attributeLabels()
     {
         return [
-            'posid' => '推荐位',
+            'tag_id' => '推荐位',
         ];
     }
 }
