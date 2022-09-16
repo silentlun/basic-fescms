@@ -138,7 +138,7 @@ class RoleController extends BaseController
         foreach ($result as $k => $r){
             $result[$k]['checked'] = in_array($r['route'], $model->permissions) ? ' checked' : '';
             $result[$k]['level'] = Util::getLevel($r['id'], $result);
-            $result[$k]['parentid_node'] = $r['parentid'] ? ' class="child-of-node-'.$r['parentid'].'"' : '';
+            $result[$k]['parentid_node'] = $r['parent_id'] ? ' class="child-of-node-'.$r['parent_id'].'"' : '';
         }
         $str  = "<tr id='node-\$id' \$parentid_node>
 					<td style='padding-left:30px;'>\$spacer<input type='checkbox' name='permissions[]' value='\$route' level='\$level' \$checked onclick='javascript:checknode(this);'> \$name</td>

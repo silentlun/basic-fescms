@@ -37,6 +37,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
                 'width' => '',
                 'format' => 'ntext',
             ],
+            [
+                'attribute' => 'created_at',
+                'class' => 'backend\components\grid\DateColumn',
+            ],
 
             [
                 'class' => 'backend\components\grid\ActionColumn',

@@ -84,10 +84,10 @@ $identity = Yii::$app->admin->identity;
 	                            <i class="fa fa-angle-down"></i>
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-end">
+	                            
 	                            <!-- item-->
-	                            <a class="dropdown-item J_menuItem" href="<?= Url::toRoute('admin/update-self') ?>"><i class="fa fa-user"></i> 个人资料</a>
-	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item text-danger" href="<?= Url::toRoute('site/logout') ?>" data-method="post"><i class="fa fa-sign-out text-danger"></i> 安全退出</a>
+	                            <a class="dropdown-item notify-item J_menuItem" href="<?= Url::toRoute('admin/update-self') ?>"><i class="fa fa-user"></i> 个人资料</a>
+	                            <a class="dropdown-item notify-item" href="<?= Url::toRoute('site/logout') ?>" data-method="post"><i class="fa fa-sign-out"></i> 安全退出</a>
 	                        </div>
 	                    </div>
 	        

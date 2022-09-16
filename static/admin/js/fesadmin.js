@@ -1,4 +1,3 @@
-
 var App = function () {
 	return {
 		ajax:function(settings){
@@ -20,21 +19,17 @@ var App = function () {
 			    },
 			    success: function (data) {
 					parent.App.closeAll();
-			        //parent.layer.closeAll('loading');
 					option.success(data);
 			    },
 			    error: function (jqXHR, textStatus, errorThrown) {
 			        if( jqXHR.hasOwnProperty("responseJSON") ){
 						parent.swal({title: jqXHR.responseJSON.message, type: 'error'})
-			            //parent.layer.alert(jqXHR.responseJSON.message, {icon: 2})
 			        }else{
 						parent.swal({title: jqXHR.responseText, type: 'error'})
-			            //parent.layer.alert(jqXHR.responseText, {icon: 2})
 			        }
 			    },
 			    complete: function () {
 					parent.App.closeAll();
-			        //parent.layer.closeAll('loading');
 			    }
 			});
 		},
@@ -99,17 +94,13 @@ $(function() {
 	}
 
 	$(container).on('pjax:beforeSend', function(args) {
-		//alert('beforeSend');
 		parent.App.loading();
-		//parent.layer.load(2);
 	})
 	$(container).on('pjax:error', function(args) {
 		//alert('error');
 	})
 	$(container).on('pjax:complete', function(args) {
-		//alert('success');
 		parent.App.closeAll();
-		//parent.layer.closeAll('loading');
 	})
 	//多选后处理ajax
 	$(container).on('click','.multi-operate-ajax',function(e){
@@ -124,7 +115,6 @@ $(function() {
 	    });
 	    if(ids.length <= 0){
 			parent.swal({title: '未选中任何数据！', type: 'info', timer: 2000})
-			//parent.layer.alert('未选中任何数据！', {icon: 2})
 	        return false;
 	    }
 		parent.swal({
@@ -160,7 +150,6 @@ $(function() {
 		});
 		if(ids.length <= 0){
 			parent.swal({title: '未选中任何数据！', type: 'info', timer: 2000})
-		    //parent.layer.alert('未选中任何数据！', {icon: 2})
 		    return false;
 		}
 		$('#customModal').modal('show');
@@ -185,7 +174,6 @@ $(function() {
 	$("form:not(.none-loading)").on("beforeSubmit", function () {
 	    $(this).find("button[type=submit]").attr("disabled", true);
 		//parent.App.loading();
-	    //layer.load(2);
 	})
 	//排序
 	$(document).on('click','.listorder',function(event){
@@ -212,7 +200,6 @@ $(function() {
 			type: 'post',
 			data: form.serialize(),
 			success: function (data) {
-				//layer.msg('保存成功');
 				parent.swal({title: '保存成功！', type: 'success', showConfirmButton: false, timer: 2000})
 			}
 		});
@@ -220,7 +207,6 @@ $(function() {
 	});
 	
 	$("input[name='Category[type]']").on("click",function () {
-		//console.log($(this).val());
 		if ($("input[name='Category[type]']:checked").val()== 0) {
 			$('#category-list-template').show();
 			$('#category-page-template').hide();
@@ -292,4 +278,3 @@ function set_frame(id,src){
 function remove_div(id) {
 	$('#'+id).remove();
 }
-//parent.layer.load(2);

@@ -11,10 +11,11 @@ use app\widgets\JsBlock;
 
 //$this->registerCss($css);
 $this->registerJsFile(
-    '@web/static/admin/plugins/jquery-treeview/js/jquery.treetable.js',
+    '@web/static/plugins/jquery-treeview/js/jquery.treetable.js',
     ['depends' => [\yii\web\YiiAsset::className()]]
     );
 ?>
+<style>.ajaxmodal-content{height:400px;overflow-y: auto;}</style>
 <div class="modal-header">
 <h4 class="modal-title" id="ajaxModalLabel">设置[<?=$name?>]权限</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -35,7 +36,7 @@ $this->registerJsFile(
     
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
     <button type="submit" class="btn btn-primary">保存</button>
   </div>
   <?php ActiveForm::end(); ?>

@@ -14,12 +14,7 @@ use backend\widgets\ActiveForm;
     
   </div>
   <div class="modal-body ajaxmodal-content">
-    <?php $form = ActiveForm::begin([
-        'id' => 'verify-from',
-        'enableAjaxValidation' =>true,
-        'enableClientValidation' => false,
-        'validationUrl' => $this->params['url'],
-    ]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     

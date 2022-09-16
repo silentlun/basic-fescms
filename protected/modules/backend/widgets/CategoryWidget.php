@@ -7,7 +7,6 @@
  */
 namespace backend\widgets;
 
-
 use yii\base\Widget;
 use yii\bootstrap4\Html;
 
@@ -31,7 +30,6 @@ class CategoryWidget extends Widget
                 $name = "<i class=\"fa fa-folder\"></i>{$v['catname']}";
             } else {
                 $arrow = '';
-                //$name = "<label class=\"radio radio-primary\"><input type=\"radio\" name=\"catid\" value=\"{$v['id']}\" data-name=\"{$v['catname']}\"><span><i class=\"fa fa-folder\"></i>{$v['catname']}</span></label>";
                 $name = <<< HTML
 <label class="custom-control custom-radio">
   <input type="radio" name="catid" class="custom-control-input" value="{$v['id']}" data-name="{$v['catname']}">
@@ -56,7 +54,6 @@ HTML;
                 $name = "<i class=\"fa fa-folder\"></i>{$_v['catname']}";
             } else {
                 $arrow = '';
-                //$name = "<label class=\"radio radio-primary\"><input type=\"radio\" name=\"catid\" value=\"{$_v['id']}\" data-name=\"{$_v['catname']}\"><span><i class=\"fa fa-folder\"></i>{$_v['catname']}</span></label>";
                 $name = <<< HTML
 <label class="custom-control custom-radio">
   <input type="radio" name="catid" class="custom-control-input" value="{$_v['id']}" data-name="{$_v['catname']}">

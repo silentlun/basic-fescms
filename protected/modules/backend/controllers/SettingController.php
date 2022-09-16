@@ -96,7 +96,7 @@ class SettingController extends BaseController
         Yii::$app->user->setReturnUrl(Yii::$app->request->referrer);
         
 
-        return $this->render('custom_create', [
+        return $this->renderAjax('custom_create', [
             'model' => $model,
         ]);
     }
@@ -114,15 +114,10 @@ class SettingController extends BaseController
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
-            if (\Yii::$app->request->isAjax) {
-                \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-                return ['status' => 1, 'code' => 200, 'message' => Yii::t('app', 'Save Success')];
-            }else{
-                return $this->redirect(['custom']);
-            }
+            return $this->redirect(['custom']);
         }
 
-        return $this->render('custom_update', [
+        return $this->renderAjax('custom_update', [
             'model' => $model,
         ]);
     }

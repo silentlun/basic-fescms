@@ -110,9 +110,9 @@ class Util
     {
         foreach ($array as $n => $value){
             if ($id == $value[$pk]) {
-                if ($value['parentid'] == 0) return $i;
+                if ($value['parent_id'] == 0) return $i;
                 $i++;
-                return self::getLevel($value['parentid'], $array, $pk, $i);
+                return self::getLevel($value['parent_id'], $array, $pk, $i);
             }
         }
     }

@@ -88,5 +88,21 @@ class Link extends \yii\db\ActiveRecord
             
         return $datas;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeSave($insert){
+        if (!$this->isNewRecord){
+            $oldImage = $this->getOldAttribute('logo');
+            if ($oldImage && $this->logo != $oldImage) {
+                $filePath = str_replace(Yii::$app->config->site_upload_url, '', $oldImage);
+                $attachment = Attachment::findOne(['filepath' => $filePath]);
+                AttachmentIndex::deleteAll(['aid' => $attachment->id]);
+                $attachment->delete();
+            }
+        }
+        return parent::beforeSave($insert);
+    }
 
 }

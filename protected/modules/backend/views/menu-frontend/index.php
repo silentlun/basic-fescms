@@ -42,10 +42,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
             [
                 'attribute' => 'route',
                 'width' => '',
+                'label' => '链接'
             ],
             [
                 'attribute' => 'display',
                 'format' => 'raw',
+                'label' => '导航显示',
                 'value'  => function($model){
                 return Constants::getShowHideItems($model['display']);
             }

@@ -148,7 +148,7 @@ class Tree {
                 $spacer = $adds ? $adds.$j : '';
                 $selected = $id==$sid ? 'selected' : '';
                 @extract($value);
-                $parentid == 0 && $str_group ? eval("\$nstr = \"$str_group\";") : eval("\$nstr = \"$str\";");
+                $parent_id == 0 && $str_group ? eval("\$nstr = \"$str_group\";") : eval("\$nstr = \"$str\";");
                 $this->strResult .= $nstr;
                 $nbsp = $this->nbsp;
                 $this->getTableTree($id, $str, $sid, $adds.$k.$nbsp,$str_group);

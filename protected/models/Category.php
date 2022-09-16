@@ -89,10 +89,9 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
     
-    protected static function _getCategory($parentId = null, $ismenu = null){
+    protected static function _getCategory($parentId = null){
         $query = self::find();
         $query->andFilterWhere(['parent_id' => $parentId]);
-        $query->andFilterWhere(['ismenu' => $ismenu]);
         return $query->orderBy('sort asc,id asc')->indexBy('id')->asArray()->all();
     }
     
@@ -100,7 +99,7 @@ class Category extends \yii\db\ActiveRecord
      * 获取分类数组
      */
     public static function getCategory(){
-        return self::_getCategory('', 1);
+        return self::_getCategory();
     }
     
     /**

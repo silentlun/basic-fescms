@@ -67,7 +67,7 @@ class Menu extends \yii\base\Widget
     {
         $lines = '';
         foreach ($items as $item) {
-            $lines .= Html::tag('li', Html::a($item['name'], $item['route'], ['class' => 'J_menuItem']));
+            $lines .= Html::tag('li', Html::a('<i class="fa fa-circle-o"></i>'.$item['name'], $item['route'], ['class' => 'J_menuItem']));
         }
         return strtr($this->subTemplate, ['{items}' => $lines]);
     }
