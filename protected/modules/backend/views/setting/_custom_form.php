@@ -10,7 +10,7 @@ use backend\widgets\ActiveForm;
 
 <div class="modal-header">
     <h4 class="modal-title" id="ajaxModalLabel"><?= $this->title ?></h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     
   </div>
   <div class="modal-body ajaxmodal-content">

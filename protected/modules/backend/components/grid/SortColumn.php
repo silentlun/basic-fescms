@@ -11,7 +11,7 @@ use yii\helpers\Html;
 class SortColumn extends DataColumn
 {
     //public $attribute = 'listorder';
-    public $options = ['class' => 'form-control input-sm'];
+    public $options = ['class' => 'form-control input-sm form-control-sm'];
     
     public function init()
     {

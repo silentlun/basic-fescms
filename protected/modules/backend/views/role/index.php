@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $this->render('/widgets/_page-heading') ?>
   <div class="card animated fadeInRight">
-    <div class="card-toolbar clearfix">
-      <div class="toolbar-btn-action">
+    <div class="card-header">
+      <div class="card-toolbar">
         <?= Bar::widget(['template' => '{create}']) ?>
       </div>
     </div>
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
       <div class="table-responsive">
         <table class="table table-hover">
-          <thead>
+          <thead class="table-light">
             <tr>
               <th>角色名称</th>
               <th>描述</th>
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <td><?= Html::encode($role->name) ?></td>
               <td><?= Html::encode($role->description) ?></td>
               <td>
-              <a class="btn btn-info btn-xs" data-toggle="modal" data-target="#ajaxModal" data-remote="<?=Url::toRoute(['role/priv','name' => $role->name]) ?>" title="权限设置" data-pjax="0"><i class="fa fa-lock"></i> 权限设置</a>
+              <a class="btn btn-info btn-xs" data-bs-toggle="modal" data-bs-target="#ajaxModal" data-remote="<?=Url::toRoute(['role/priv','name' => $role->name]) ?>" title="权限设置" data-pjax="0"><i class="fa fa-lock"></i> 权限设置</a>
               <a class="btn btn-success btn-xs" href="<?=Url::toRoute(['role/update','name' => $role->name]) ?>" title="编辑" data-pjax="0"><i class="fa fa-edit"></i> 编辑</a> 
               <a class="btn btn-danger btn-xs" href="<?=Url::toRoute(['role/delete','name' => $role->name]) ?>" title="删除" data-method="post" data-pjax="1" data-confirm="您确定要删除该数据吗？"><i class="fa fa-ban"></i> 删除</a></td>
             </tr>

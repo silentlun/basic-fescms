@@ -10,11 +10,8 @@ use app\helpers\Constants;
 
 <?= $this->render('/widgets/_page-heading') ?>
 <div class="card">
-  
-  <ul class="nav nav-tabs page-tabs">
-    <li class="nav-item active"><a class="nav-link"><?= $this->params['subtitle'] ?></a></li>
-  </ul>
   <div class="card-body">
+    <h4 class="header-title"><?= $this->params['subtitle'] ?></h4>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'parent_id')->dropdownList($model::getMenuTree(),['prompt'=>'作为一级菜单']);?>

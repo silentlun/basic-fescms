@@ -27,14 +27,14 @@ class CategoryWidget extends Widget
             $child = $this->getChild($id);
             if ($child) {
                 $arrow = '<span class="fa arrow"></span>';
-                $name = "<i class=\"fa fa-folder\"></i>{$v['catname']}";
+                $name = $v['catname'];
             } else {
                 $arrow = '';
                 $name = <<< HTML
-<label class="custom-control custom-radio">
-  <input type="radio" name="catid" class="custom-control-input" value="{$v['id']}" data-name="{$v['catname']}">
-  <span class="custom-control-label"><i class="fa fa-folder"></i>{$v['catname']}</span>
-</label>
+<div class="form-check">
+  <input type="radio" name="catid" id="catid{$v['id']}" class="form-check-input" value="{$v['id']}" data-name="{$v['catname']}">
+  <label class="form-check-label" for="catid{$v['id']}">{$v['catname']}</label>
+</div>
 HTML;
             }
             $list .= str_replace(['{arrow}', '{name}', '{child}'], [$arrow, $name, $child], $this->firstLevelLiTemplate);
@@ -51,14 +51,14 @@ HTML;
             $child = $this->getChild($id);
             if ($child) {
                 $arrow = '<span class="fa arrow"></span>';
-                $name = "<i class=\"fa fa-folder\"></i>{$_v['catname']}";
+                $name = $_v['catname'];
             } else {
                 $arrow = '';
                 $name = <<< HTML
-<label class="custom-control custom-radio">
-  <input type="radio" name="catid" class="custom-control-input" value="{$_v['id']}" data-name="{$_v['catname']}">
-  <span class="custom-control-label"><i class="fa fa-folder"></i>{$_v['catname']}</span>
-</label>
+<div class="form-check">
+  <input type="radio" name="catid" id="catid{$_v['id']}" class="form-check-input" value="{$_v['id']}" data-name="{$_v['catname']}">
+  <label class="form-check-label" for="catid{$_v['id']}">{$_v['catname']}</label>
+</div>
 HTML;
             }
             $sublist .= str_replace(['{arrow}', '{name}', '{list}'], [$arrow, $name, $child], $this->liTemplate);

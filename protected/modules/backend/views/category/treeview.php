@@ -9,16 +9,13 @@ use backend\widgets\CategoryWidget;
 use yii\base\Widget;
 use app\widgets\JsBlock;
 /* @var $this yii\web\View */
-$this->registerJsFile(
-    '@web/static/admin/js/jquery.metisMenu.js',
-    ['depends' => [\yii\web\YiiAsset::className()]]
-    );
+
 
 
 ?>
 <div class="modal-header">
     <h4 class="modal-title" id="ajaxModalLabel">选择栏目</h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     
   </div>
   <div class="modal-body ajaxmodal-content">
@@ -28,7 +25,7 @@ $this->registerJsFile(
     
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
     <button type="button" class="btn btn-primary" id="categoryTreeBtn">确定</button>
   </div>
 

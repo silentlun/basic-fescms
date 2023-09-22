@@ -123,7 +123,14 @@ $this->title = $this->title ? $this->title.' - ' : '';
 <?= $this->render('_flash') ?>
 <div style="display:none">
 <?= Yii::$app->config->site_statics_script ?>
-<script type="text/javascript" src="<?=Url::toRoute(['site/count'])?>"></script>
+<script>
+(function() {
+	  var tbstat = document.createElement("script");
+	  tbstat.src = "<?= Url::to('/static/js/stat.js') ?>?v=1";
+	  var tbt = document.getElementsByTagName("script")[0]; 
+	  tbt.parentNode.insertBefore(tbstat, tbt);
+	})();
+</script>
 </div>
 </body>
 </html>

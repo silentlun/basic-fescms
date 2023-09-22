@@ -29,13 +29,9 @@ class SiteController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function actions()
+    public function actionError()
     {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
+        return $this->renderPartial('error');
     }
 
     /**
@@ -81,7 +77,7 @@ class SiteController extends BaseController
     /**
      * 访问统计
      */
-    public function actionCount()
+    public function actionCount11()
     {
         if (Util::checkRobot()){
             $curTime = strtotime(date('Y-m-d'));
@@ -115,5 +111,40 @@ class SiteController extends BaseController
                 'httpOnly' => true,
             ]));
         }
+    }
+    /**
+     * 访问统计
+     */
+    public function actionCount()
+    {
+        if (!Util::checkRobot()) return false;
+        $referrer = Yii::$app->request->referrer;
+        if ($referrer && (strpos($referrer, Yii::$app->config->site_url) !== false)){
+            $cookies = Yii::$app->request->cookies;
+            if (($cookie = $cookies->get('FES_distinctid')) !== null) {
+                $uuid = $cookie->value;
+                $curtime = strtotime(date('Y-m-d', time()));
+                $platform = Util::isMobile() ? 2 : 1;
+                $userIP = Yii::$app->request->userIP;
+                $uvCount = Yii::$app->db->createCommand('SELECT COUNT(*) FROM visitor_stat WHERE created_at>:created_at AND uuid=:uuid')
+                ->bindValues([':created_at' => $curtime, ':uuid' => $uuid])
+                ->queryScalar();
+                
+                if ($uvCount) {
+                    Yii::$app->db->createCommand()->update('visitor_stat', ['views' => new \yii\db\Expression('views + 1')], ['AND', ['>', 'created_at', $curtime], ['uuid' => $uuid]])->execute();
+                } else {
+                    Yii::$app->db->createCommand()->insert('visitor_stat', [
+                        'platform' => $platform,
+                        'uuid' => $uuid,
+                        'ip' => $userIP,
+                        'created_at' => time(),
+                    ])->execute();
+                }
+                
+                return '200';
+            }
+            return '401';
+        }
+        return '403';
     }
 }

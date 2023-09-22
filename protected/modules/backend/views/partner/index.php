@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
 <?= $this->render('/widgets/_page-heading') ?>
   <div class="card animated fadeInRight">
     <?php Pjax::begin(['id' => 'pjax-container']); ?>
-    <div class="card-toolbar clearfix">
+    <div class="card-header">
       
-      <div class="toolbar-btn-action">
+      <div class="card-toolbar">
       <?= Bar::widget() ?>
       </div>
     </div>

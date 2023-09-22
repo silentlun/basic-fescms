@@ -11,16 +11,13 @@ $this->params['breadcrumbs'][] = '基本设置';
 ?>
 <?= $this->render('/widgets/_page-heading') ?>
 <div class="card">
-  <ul class="nav nav-tabs page-tabs">
-    <li class="nav-item active"><a class="nav-link" href="#web">网站设置</a></li>
-  </ul>
   <?php $form = ActiveForm::begin([
         'id' => 'form-setting',
         'options' => ['class' => 'form-horizontal none-loading'],
       'enableAjaxValidation' => true,
     ]); ?>
   <div class="card-body">
-    
+    <h4 class="header-title">网站设置</h4>
       <?= $form->field($model, 'site_title')->textInput() ?>
       <?= $form->field($model, 'site_url')->textInput() ?>
       <?= $form->field($model, 'site_keywords')->textInput() ?>

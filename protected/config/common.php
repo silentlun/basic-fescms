@@ -22,16 +22,6 @@ $config = [
                         'jquery.min.js'
                     ]
                 ],
-                'yii\bootstrap4\BootstrapAsset' => [
-                    'css' => [
-                        'css/bootstrap.min.css'
-                    ]
-                ],
-                'yii\bootstrap4\BootstrapPluginAsset' => [
-                    'js' => [
-                        'js/bootstrap.bundle.min.js'
-                    ]
-                ]
             ]
         ],
         'i18n' => [

@@ -1,24 +1,62 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $name string */
-/* @var $message string */
-/* @var $exception Exception */
+/* @var $this \yii\web\View */
+/* @var $content string */
 
 use yii\helpers\Html;
+use app\assets\AppAsset;
 
-$this->title = $name;
+AppAsset::register($this);
+$this->title = '404-';
+
 ?>
-<section class="error-wrap">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-6 col-md-10">
-				<div class="text-center"><img src="/static/images/404.png" class="img-fluid">
-					<p class="mt-3">Web服务器正在处理您的请求时，发生了以上错误。</p>
-					<p>如果您认为这是服务器错误，请与我们联系。 谢谢您。</p>
-					<a class="btn btn-primary" href="/">返回首页</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no">
+    <title><?= Html::encode($this->title.Yii::$app->config->site_title) ?></title>
+    <?php $this->head() ?>
+    
+    
+</head>
+<body>
+<?php $this->beginBody() ?>
+<style>
+.error-area {
+    height: 100vh;
+    text-align: center;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    position: relative;
+}
+</style>
+<div class="error-area d-flex flex-column justify-content-center">
+
+	<div class="container text-center">
+						<div class="row">
+							<div class="col-sm-6 text-center text-sm-end">
+								<div class="display-1 text-danger font-w700">404</div>
+							</div>
+							<div class="col-sm-6 text-center d-sm-flex align-items-sm-center">
+								<div class="display-1 text-muted font-w300">Error</div>
+							</div>
+						</div>
+						<h1 class="h4 mt-4 mb-3">哎呀.. 你刚刚发现了一个错误页面..</h1>
+						<p class="h6 text-muted mb-5" >很抱歉，您访问的页面不存在，它可能已被移动或删除。</p>
+						<div class="button">
+							<?=Html::a('进入首页', ['site/index'], ['class' => 'btn btn-primary btn-lg px-5'])?>
+						</div>
+					</div>
+</div>
+
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

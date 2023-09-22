@@ -6,8 +6,8 @@ use yii\helpers\Url;
 ?>
 
 <!--ajax模拟框加载-->
-<div class="modal fade" id="ajaxModal" aria-hidden="true" role="dialog" aria-labelledby="ajaxModalLabel" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+<div class="modal fade" id="ajaxModal" aria-hidden="true" role="dialog" aria-labelledby="ajaxModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-body">
                 <?= Html::img('@web/static/admin/images/loading.gif', ['class' => 'loading']) ?>
@@ -17,8 +17,8 @@ use yii\helpers\Url;
     </div>
 </div>
 <!--ajax大模拟框加载-->
-<div class="modal fade" id="ajaxModalLg" aria-hidden="true" role="dialog" aria-labelledby="ajaxModalLabel" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="ajaxModalLg" aria-hidden="true" role="dialog" aria-labelledby="ajaxModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <?= Html::img('@web/static/admin/images/loading.gif', ['class' => 'loading']) ?>
@@ -28,8 +28,8 @@ use yii\helpers\Url;
     </div>
 </div>
 <!--ajax小模拟框加载-->
-<div class="modal fade" id="ajaxModalMin" aria-hidden="true" role="dialog" aria-labelledby="ajaxModalLabel" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-sm">
+<div class="modal fade" id="ajaxModalMin" aria-hidden="true" role="dialog" aria-labelledby="ajaxModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm">
         <div class="modal-content">
             <div class="modal-body">
                 <?= Html::img('@web/static/admin/images/loading.gif', ['class' => 'loading']) ?>
@@ -39,8 +39,8 @@ use yii\helpers\Url;
     </div>
 </div>
 <!--ajax自定义模拟框加载-->
-<div class="modal fade" id="customModal" aria-hidden="true" role="dialog" aria-labelledby="customModalLabel" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+<div class="modal fade" id="customModal" aria-hidden="true" role="dialog" aria-labelledby="customModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-body">
                 <?= Html::img('@web/static/admin/images/loading.gif', ['class' => 'loading']) ?>
@@ -56,6 +56,7 @@ use yii\helpers\Url;
         <span>加载中... </span>
     </div>
 </div>
+
 <script>
     // 默认模拟框清除
     $('#ajaxModal').on('hide.bs.modal', function (e) {

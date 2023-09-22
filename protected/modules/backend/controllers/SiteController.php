@@ -79,14 +79,24 @@ class SiteController extends BaseController
                 $uvNum = ArrayHelper::keyExists($r, $uvCount, false) ? intval($uvCount[$r]['total']) : 0;
                 $pvNum = ArrayHelper::keyExists($r, $pvCount, false) ? intval($pvCount[$r]['total']) : 0;
                 $str .= $r.",{$uvNum},{$pvNum}\n";
+                $uvData[] = $uvNum;
+                $pvData[] = $pvNum;
                 $uvTotal += $uvNum;
                 $pvTotal += $pvNum;
             }
+            $listData = [
+                ['name' => 'UV', 'type' => 'line', 'data' => $uvData],
+                ['name' => 'PV', 'type' => 'line', 'data' => $pvData],
+            ];
+            $data = [
+                'categories' => $daylist,
+                'list' => $listData,
+            ];
             $ipTotal = 0;
             foreach ($ipCount as $v){
                 $ipTotal += $v['total'];
             }
-            return ['data' => $str, 'uvTotal' => $uvTotal, 'pvTotal' => $pvTotal, 'ipTotal' => $ipTotal];
+            return ['data' => $data, 'uvTotal' => $uvTotal, 'pvTotal' => $pvTotal, 'ipTotal' => $ipTotal];
         }
         switch (Yii::$app->getDb()->driverName) {
             case "mysql":

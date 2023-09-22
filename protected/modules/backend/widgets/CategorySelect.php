@@ -27,12 +27,12 @@ class CategorySelect extends InputWidget
         $buttonOptions = [
             'class' => 'btn btn-success',
             'data-remote' => Url::toRoute($this->defaultRoute),
-            'data-toggle' => 'modal',
-            'data-target' => '#ajaxModal',
+            'data-bs-toggle' => 'modal',
+            'data-bs-target' => '#ajaxModal',
         ];
-        $buttonHtml = Html::beginTag('div', ['class' => 'input-group-append']) . "\n";
-        $buttonHtml .= Html::button('<i class="fa fa-send"></i> 切换', $buttonOptions);
-        $buttonHtml .= Html::endTag('div') . "\n";
+        //$buttonHtml = Html::beginTag('div', ['class' => 'input-group-text']) . "\n";
+        $buttonHtml = Html::button('<i class="fa fa-send"></i> 切换', $buttonOptions);
+        //$buttonHtml .= Html::endTag('div') . "\n";
         
         $inputHtml = Html::beginTag('div', ['class' => 'input-group']) . "\n";
         $inputHtml .= Html::input('text', 'catname', $catname, ['class' => 'form-control', 'placeholder' => '选择栏目', 'disabled' => true]) . "\n";

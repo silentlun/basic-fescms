@@ -10,9 +10,9 @@ class Menu extends \yii\base\Widget
 {
     public $items = [];
     
-    public $subTemplate = "\n<ul class='sub-menu'>\n{items}\n</ul>\n";
+    public $subTemplate = "\n<ul class=\"side-nav-second-level\">\n{items}\n</ul>\n";
     
-    public $dropDownCaret = '<b class="caret pull-right"></b>';
+    public $dropDownCaret = '<span class="menu-arrow"></span>';
     
     public $linkIcon = '<i class="fa {icon}"></i>';
     
@@ -33,7 +33,7 @@ class Menu extends \yii\base\Widget
         $items = $this->normalizeItems();
         //print_r($items);exit;
         foreach ($items as $key => $item) {
-            $lines .= Html::tag('li', $this->renderItem($item), ['class' => 'has-sub']);
+            $lines .= Html::tag('li', $this->renderItem($item), ['class' => 'side-nav-item']);
         }
         return $lines;
     }
@@ -52,8 +52,8 @@ class Menu extends \yii\base\Widget
             $this->dropDownCaret = '';
         } else {
             $items = $this->renderDropdown($items);
-            $linkRoute = 'javascript:;';
-            $linkOptions = ['class' => 'has-arrow'];
+            $linkRoute = '#sidebar'.$item['id'];
+            $linkOptions = ['class' => 'side-nav-link', 'data-bs-toggle' => 'collapse'];
         }
         
         return Html::a($this->dropDownCaret.$linkIcon.'<span>'.$item['name'].'</span>', $linkRoute, $linkOptions).$items;
@@ -67,9 +67,10 @@ class Menu extends \yii\base\Widget
     {
         $lines = '';
         foreach ($items as $item) {
-            $lines .= Html::tag('li', Html::a('<i class="fa fa-circle-o"></i>'.$item['name'], $item['route'], ['class' => 'J_menuItem']));
+            $lines .= Html::tag('li', Html::a($item['name'], $item['route'], ['class' => 'J_menuItem']));
         }
-        return strtr($this->subTemplate, ['{items}' => $lines]);
+        $subHtml = strtr($this->subTemplate, ['{items}' => $lines]);
+        return Html::tag('div', $subHtml, ['class' => 'collapse', 'id' => 'sidebar'.$item['parent_id']]);
     }
     
     protected function normalizeItems($parentId = 0)
@@ -80,6 +81,8 @@ class Menu extends \yii\base\Widget
             $array['name'] = $item['name'];
             $array['route'] = [$item['route']];
             $array['icon'] = $item['icon'];
+            $array['id'] = $item['id'];
+            $array['parent_id'] = $item['parent_id'];
             $subMenu = $this->normalizeItems($item['id']);
             //print_r($subMenu);
             if ($subMenu) {

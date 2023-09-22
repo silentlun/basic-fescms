@@ -25,9 +25,9 @@ $this->registerJsFile("@web/static/plugins/jquery-treeview/js/jquery.treeview.js
 }
 .filetree .active{color:#007BFF;font-weight: 600}
 </style>
-<div class="cat-menu card">
-  <h4 class="card-header">栏目导航</h4>
-  <div class="card-body cat-menubody">
+<div class="cat-menu">
+  <h4 class="card-title mb-3">栏目导航</h4>
+  <div class="cat-menu-list">
     <div id="treecontrol"><span style="display:none"> <a href="#"></a> <a href="#"></a> </span> <a href="#"><img src="/static/plugins/jquery-treeview/images/minus.gif" /> <img src="/static/plugins/jquery-treeview/images/application_side_expand.png" /> 展开/收缩</a> </div>
         
         <ul class="filetree  treeview">

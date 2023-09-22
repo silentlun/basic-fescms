@@ -9,45 +9,74 @@ $this->registerJsFile(
     '@web/static/plugins/highcharts/highcharts.js',
     ['depends' => [\backend\assets\AdminAsset::className()]]
     );
+$this->registerJsFile(
+    '@web/static/plugins/echarts/echarts.min.js',
+    ['depends' => [\yii\web\YiiAsset::className()]]
+    );
 
 ?>
 <?= $this->render('/widgets/_page-heading') ?>
 <div class="card">
-  <div class="card-body m-3">
-  	<div class="row">
-	<div class="col-md-9">
-		<div class="media media-sm m-b">
-				
-				<div class="userhead"><?php echo ucfirst(substr(Yii::$app->admin->getIdentity()->username, 0, 1));?></div>
-				
-				<div class="media-body">
-					<h5 class="media-heading m-t-10">欢迎回来，<?= Yii::$app->admin->getIdentity()->username ?>！</h5>
-					<p class="text-muted mb-0"><?= Yii::$app->admin->getIdentity()->getRolesNameString()?></p>
-					<p class="text-muted mb-0">上次登录：<?= date('Y-m-d H:i', Yii::$app->admin->identity->prev_login_time)?></p>
-				</div>
-			</div>
-		
-	</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="d-flex">
+                    <div class="flex-shrink-0 me-3">
+                        <img src="/static/admin/images/user-head.png" class="avatar-md rounded-circle img-thumbnail">
+                    </div>
+                    <div class="flex-grow-1 align-self-center">
+                        <div class="text-muted">
+                            <h4 class="mb-2">欢迎回来，<?= Yii::$app->admin->getIdentity()->username ?>！</h4>
+                            <h5 class="mb-1"><?= Yii::$app->admin->getIdentity()->getRolesNameString()?></h5>
+                            <p class="mb-0">上次登录：<?= date('Y-m-d H:i', Yii::$app->admin->identity->prev_login_time)?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-	<div class="col-md-3">
-		<div class="text-center mt-sm-0 mt-3 text-md-right">
-			<a href="<?= Url::toRoute('admin/update-self') ?>" class="btn btn-primary">
-				<i class="fa fa-edit"></i> 编辑个人资料
-			</a>
-		</div>
-	</div>
-</div>
-  	
-            
-    
-  </div>
+            <div class="col-lg-4 align-self-center">
+                <div class="text-lg-center mt-4 mt-lg-0">
+                    <div class="row">
+                        <div class="col-4">
+                            <div>
+                                <p class="text-muted text-truncate mb-2">登录次数</p>
+                                <h5 class="mb-0">48</h5>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <p class="text-muted text-truncate mb-2">发布内容</p>
+                                <h5 class="mb-0">40</h5>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <p class="text-muted text-truncate mb-2">Clients</p>
+                                <h5 class="mb-0">18</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="clearfix mt-4 mt-lg-0 float-end">
+                    <a href="<?= Url::toRoute('admin/update-self') ?>" class="btn btn-primary">
+        				<i class="fa fa-edit"></i> 编辑个人资料
+        			</a>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
 </div>
 
 <div class="row py-3">
 	<div class="col-md-3 col-6">
 		<div class="card widget-flat">
         	<div class="card-body p-4">
-        		<div class="float-right h3 text-muted">
+        		<div class="float-end h3 text-muted">
         			<i class="fa fa-file-text"></i>
         		</div>
         		<h6 class="text-muted fw-normal mt-0">内容</h6>
@@ -59,7 +88,7 @@ $this->registerJsFile(
 	<div class="col-md-3 col-6">
 		<div class="card widget-flat">
         	<div class="card-body p-4">
-        		<div class="float-right h3 text-muted">
+        		<div class="float-end h3 text-muted">
         			<i class="fa fa-sitemap"></i>
         		</div>
         		<h6 class="text-muted fw-normal mt-0">栏目</h6>
@@ -70,7 +99,7 @@ $this->registerJsFile(
 	<div class="col-md-3 col-6">
 		<div class="card widget-flat">
         	<div class="card-body p-4">
-        		<div class="float-right h3 text-muted">
+        		<div class="float-end h3 text-muted">
         			<i class="fa fa-commenting"></i>
         		</div>
         		<h6 class="text-muted fw-normal mt-0">留言</h6>
@@ -81,7 +110,7 @@ $this->registerJsFile(
 	<div class="col-md-3 col-6">
 		<div class="card widget-flat">
         	<div class="card-body p-4">
-        		<div class="float-right h3 text-muted">
+        		<div class="float-end h3 text-muted">
         			<i class="fa fa-paperclip"></i>
         		</div>
         		<h6 class="text-muted fw-normal mt-0">附件</h6>
@@ -113,7 +142,7 @@ $this->registerJsFile(
     <div class="row py-3 m-0">
     	<div class="col-md-3 col-4">
     		<div class="card widget-stats">
-            	<div class="card-body p-0 border-right">
+            	<div class="card-body p-0 border-end">
             		<h6 class="text-muted fw-normal mt-0">浏览量(PV)</h6>
             		<h5 class="mt-2 mb-0" id="pvCount">0</h5>
             	</div>
@@ -121,7 +150,7 @@ $this->registerJsFile(
     	</div>
     	<div class="col-md-3 col-4">
     		<div class="card widget-stats">
-            	<div class="card-body p-0 border-right">
+            	<div class="card-body p-0 border-end">
             		<h6 class="text-muted fw-normal mt-0">访客数(UV)</h6>
             		<h5 class="mt-2 mb-0" id="uvCount">0</h5>
             	</div>
@@ -147,23 +176,24 @@ $this->registerJsFile(
             <h4>热门文章TOP5</h4>
           </div>
           <div class="card-body p-3">
+            <div class="table-responsive">
             <table class="table table-centered table-nowrap table-hover mb-0">
             <thead>
             	<tr>
             		<th>标题</th>
-            		<th width="150" class="text-right">浏览量</th>
+            		<th width="150" class="text-end">浏览量</th>
             	</tr>
             </thead>
             <tbody>
             	<?php foreach ($topViews as $r){?>
                 <tr>
             		<td><?=Html::a($r['title'], ['/content/view', 'id' => $r['id']])?></td>
-            		<td class="text-right"><?=$r['views']?></td>
+            		<td class="text-end"><?=$r['views']?></td>
             	</tr>
             	<?php }?>
             </tbody>
         </table>
-            
+            </div>
           </div>
         </div>
       
@@ -174,29 +204,29 @@ $this->registerJsFile(
             <h4>系统信息</h4>
           </div>
           <div class="card-body p-3">
-            <ul class="list-group service-list">
-              <li class="list-group-item "><span class="pull-right text-muted"><?= $info['OPERATING_ENVIRONMENT'] ?></span> <span class="badge bg-green ">&nbsp;&nbsp;</span> <strong>Web Server</strong>:
-                
-              </li>
-              <li class="list-group-item "><span class="pull-right text-muted"><?= $info['PHP_VERSION'] ?></span> <span class="badge bg-success">&nbsp;&nbsp;</span> <strong>PHP版本</strong>:
-                
-              </li>
-              <li class="list-group-item"><span class="pull-right text-muted"><?= $info['DB_INFO'] ?></span> <span class="badge bg-blue">&nbsp;&nbsp;</span> <strong>
-                数据库信息
-                </strong>:
-                
-              </li>
-              <li class="list-group-item"><span class="pull-right text-muted"><?= $info['UPLOAD_MAX_FILE_SIZE'] ?></span> <span class="badge bg-purple">&nbsp;&nbsp;</span> <strong>
-                文件上传限制
-                </strong>:
-                
-              </li>
-              <li class="list-group-item"><span class="pull-right text-muted"><?= $info['MAX_EXECUTION_TIME'] ?></span> <span class="badge bg-red">&nbsp;&nbsp;</span> <strong>
-                脚本超时限制
-                </strong>:
-                
-              </li>
-            </ul>
+            <div class="chart-widget-list">
+                <p>
+                    <i class="fa fa-square text-primary"></i> Web Server
+                    <span class="float-end"><?= $info['OPERATING_ENVIRONMENT'] ?></span>
+                </p>
+                <p>
+                    <i class="fa fa-square text-danger"></i> PHP版本
+                    <span class="float-end"><?= $info['PHP_VERSION'] ?></span>
+                </p>
+                <p>
+                    <i class="fa fa-square text-success"></i> 数据库信息
+                    <span class="float-end"><?= $info['DB_INFO'] ?></span>
+                </p>
+                <p>
+                    <i class="fa fa-square text-warning"></i> 文件上传限制
+                    <span class="float-end"><?= $info['UPLOAD_MAX_FILE_SIZE'] ?></span>
+                </p>
+                <p class="mb-0">
+                    <i class="fa fa-square text-info"></i> 脚本超时限制
+                    <span class="float-end"><?= $info['MAX_EXECUTION_TIME'] ?></span>
+                </p>
+            </div>
+            
             
             
           </div>
@@ -227,7 +257,7 @@ function loadAjaxCount() {
         },
         dataType: 'json',
         success: function (res) {
-        	renderChartLine('countStat', res.data);
+        	App.renderChartLine('countStat', res.data);
         	$('#pvCount').text(res.pvTotal);
         	$('#uvCount').text(res.uvTotal);
         	$('#ipCount').text(res.ipTotal);
@@ -241,7 +271,8 @@ function renderChartLine(container, csv, title = null) {
 			csv: csv
 		},
 		chart: {
-			type: 'spline'
+			type: 'spline',
+			backgroundColor: 'rgba(0,0,0,0)'
 		},
 		title: {
 			text: title

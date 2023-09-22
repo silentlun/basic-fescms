@@ -55,7 +55,7 @@ jQuery(function() {
 				$filePickerBlock = $wrap.find('.filePickerBlock'),
 			
 			    // 没选择文件之前的内容。
-			    $placeHolder = $wrap.find('.placeholder'),
+			    $placeHolder = $wrap.find('.webuploader-placeholder'),
 			
 			    // 总体进度条
 			    $progress = $statusBar.find('.progress').hide(),
@@ -495,9 +495,9 @@ jQuery(function() {
 
         function buildModalBody () {
             return '<ul class="nav nav-upfile">\
-        					<li class="nav-item"><a class="nav-link active" href="#tab-upfile1" data-toggle="tab" aria-expanded="true">本地上传</a></li>\
-        					<li class="nav-item"><a class="nav-link" href="#tab-upfile2" data-toggle="tab" aria-expanded="false">插入图片</a></li>\
-        					<li class="nav-item"><a class="nav-link" href="#tab-upfile3" data-toggle="tab" aria-expanded="false" onclick="utils.set_frame(\'album_list\',\''+config['albumUrl']+'\');">在线管理</a></li>\
+        					<li class="nav-item"><a class="nav-link active" href="#tab-upfile1" data-bs-toggle="tab" aria-expanded="true">本地上传</a></li>\
+        					<li class="nav-item"><a class="nav-link" href="#tab-upfile2" data-bs-toggle="tab" aria-expanded="false">插入图片</a></li>\
+        					<li class="nav-item"><a class="nav-link" href="#tab-upfile3" data-bs-toggle="tab" aria-expanded="false" onclick="utils.set_frame(\'album_list\',\''+config['albumUrl']+'\');">在线管理</a></li>\
         				</ul>\
         				<div class="tab-content upload-attachment-content">\
         					<div class="tab-pane fade active show" id="tab-upfile1">\
@@ -514,7 +514,7 @@ jQuery(function() {
         										'</div>' +
         									'</div>' +
         									'<div class="queueList">' +
-        										'<div id="dndArea" class="placeholder">' +
+        										'<div id="dndArea" class="webuploader-placeholder">' +
         											'<div class="filePickerContainer"><div id="filePicker"></div></div>' +
         										'</div>' +
         										'<ul class="filelist element-invisible">' +
@@ -537,17 +537,17 @@ jQuery(function() {
         function renderModal () {
             var modal_id = config['modal_id'];
             if ($('#' + modal_id).length == 0) {
-                return '<div id="' + config['modal_id'] + '" class="fade modal modal-c" role="dialog" tabindex="-1">' +
+                return '<div id="' + config['modal_id'] + '" class="fade modal modal-c" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" tabindex="-1">' +
                         '<div class="modal-dialog cus-size modal-lg">' +
                             '<div class="modal-content">' +
                                 '<div class="modal-header">' +
                                     '<h4 class="modal-title">上传文件</h4>' +
-                                    '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+                                    '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
                                 '</div>' +
                                 '<div class="modal-body">' +
                                 '</div>' +
 								'<div class="modal-footer">'+
-									'<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>'+
+									'<button type="button" class="btn btn-primary" data-bs-dismiss="modal"> 确定 </button>'+
 								'</div>'+
                             '</div>' +
                         '</div>' +
@@ -588,7 +588,7 @@ jQuery(function() {
         // =====================================================================================
         $('.' + config['modal_id']).on('click', function () {
             chooseObject = $(this);
-            _modal.modal({keyboard: false,backdrop:'static'});
+            _modal.modal('show');
             _modal.find('.modal-body').html('');
             _modal.find('.modal-body').html(buildModalBody());
         });

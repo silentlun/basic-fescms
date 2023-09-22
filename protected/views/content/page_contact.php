@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\bootstrap4\ActiveForm;
+use app\widgets\bootstrap5\ActiveForm;
 use yii\captcha\Captcha;
 use app\models\Feedback;
 use yii\widgets\Breadcrumbs;

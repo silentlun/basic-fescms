@@ -14,24 +14,18 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['breadcrumbs'][] = Yii::t('app', 'List');
 ?>
 <?= $this->render('/widgets/_page-heading') ?>
-<div class="form-row">
-  
-  <div class="col-md-2">
+
+
+<div class="card">
+  <div class="card-body">
+  <div class="page-aside-left">
   <?= $this->render('/widgets/_categorys') ?>
   </div>
-  <div class="col-md-10">
-    <div class="full-height">
-      
-      <div class="card">
-        <?php Pjax::begin(['id' => 'pjax-container']); ?>
-        <div class="card-toolbar clearfix">
-          
-          <div class="toolbar-btn-action pull-left">
-          <?= Bar::widget(['template' => '{create} {listorder} {delete} {push}']) ?>
-          </div>
-          
-        </div>
-        <div class="card-body">
+  <div class="page-aside-right">
+    <?php Pjax::begin(['id' => 'pjax-container']); ?>
+      <div class="card-toolbar mb-3">
+      <?= Bar::widget(['template' => '{create} {listorder} {delete} {push}']) ?>
+      </div>
         <form id="myform">
           <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -78,9 +72,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'List');
         ],
     ]); ?>
         </form>  
-        </div>
+        
       <?php Pjax::end(); ?>
-      </div>
+      
     </div>
   </div>
 </div>

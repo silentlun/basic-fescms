@@ -6,23 +6,20 @@ use backend\widgets\ActiveForm;
 
 $this->title = Yii::t('app', 'Configs');
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = '基本设置';
+$this->params['breadcrumbs'][] = '附件设置';
 ?>
 <?= $this->render('/widgets/_page-heading') ?>
 <div class="card">
-  <ul class="nav nav-tabs page-tabs">
-    <li class="nav-item active"><a class="nav-link" href="#attr">附件设置</a></li>
-  </ul>
   <?php $form = ActiveForm::begin([
         'id' => 'form-setting',
         'options' => ['class' => 'form-horizontal none-loading'],
       'enableAjaxValidation' => true,
     ]); ?>
   <div class="card-body">
-    
+    <h4 class="header-title">附件设置</h4>
       <?= $form->field($model, 'site_upload_url')->textInput() ?>
       <?= $form->field($model, 'site_upload_allowext')->textInput() ?>
-      <?= $form->field($model, 'site_upload_maxsize',['template'=>"{label}\n<div class=\"col-sm-6\"><div class=\"row\"><div class=\"col-sm-6\">\n{input}\n{error}</div><div class=\"col-sm-6 form-control-static\">{hint}</div></div></div>"])->textInput()->hint('KB') ?>
+      <?= $form->field($model, 'site_upload_maxsize',['template'=>"{label}\n<div class=\"col-sm-6\"><div class=\"row\"><div class=\"col-sm-6\">\n{input}\n{error}</div><div class=\"col-sm-6\"><div class=\"form-control-plaintext\">{hint}</div></div></div></div>"])->textInput()->hint('KB') ?>
     
     <?= $form->defaultButtons() ?>
   </div>

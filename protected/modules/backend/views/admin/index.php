@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= $this->render('/widgets/_page-heading') ?>
   <div class="card animated fadeInRight">
     <?php Pjax::begin(['id' => 'pjax-container']); ?>
-    <div class="card-toolbar clearfix">
-      <div class="toolbar-btn-action">
+    <div class="card-header">
+      <div class="card-toolbar">
       <?= Bar::widget(['template' => '{create}']) ?>
       </div>
     </div>

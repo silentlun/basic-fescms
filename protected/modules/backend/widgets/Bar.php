@@ -18,7 +18,7 @@ class Bar extends Widget
     public $buttons = [];
 
     public $options = [
-        'class' => 'mail-tools tooltip-demo',
+        'class' => 'toolbar-btn-action',
     ];
     public $template = "{create} {sort} {delete}";
     

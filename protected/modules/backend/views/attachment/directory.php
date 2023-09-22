@@ -14,9 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <li><a href="<?=Url::to(['attachment/index'])?>">数据库模式</a></li>
     <li class="active"><a href="<?=Url::to(['attachment/directory'])?>">目录模式</a></li>
   </ul>
-  <div class="card-toolbar clearfix">
+  <div class="card-header">
       
-      <div class="toolbar-btn-action">
+      <div class="card-toolbar">
       <a class="btn btn-primary m-r-5" data-toggle="modal" data-target="#ajaxModal" id="createdir" href="<?=Url::to(['attachment/create'])?>" title="创建"><i class="fa fa-plus"></i> 创建</a>
       </div>
     </div>

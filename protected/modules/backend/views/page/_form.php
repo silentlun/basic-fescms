@@ -9,11 +9,8 @@ use backend\widgets\ActiveForm;
 
 <?= $this->render('/widgets/_page-heading') ?>
 <div class="card">
-  
-  <ul class="nav nav-tabs page-tabs">
-    <li class="active"><a><?= $this->params['subtitle'] ?></a></li>
-  </ul>
   <div class="card-body">
+    <h4 class="header-title"><?= $this->params['subtitle'] ?></h4>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>

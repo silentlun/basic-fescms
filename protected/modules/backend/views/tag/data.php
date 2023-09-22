@@ -13,9 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= $this->render('/widgets/_page-heading') ?>
   <div class="card">
         <?php Pjax::begin(['id' => 'pjax-container']); ?>
-    <div class="card-toolbar clearfix">
+    <div class="card-header">
       
-      <div class="toolbar-btn-action">
+      <div class="card-toolbar">
       <?= Bar::widget(['template' => '{listorder} {remove}']) ?>
       </div>
     </div>

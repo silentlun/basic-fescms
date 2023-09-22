@@ -37,8 +37,8 @@ class ActionColumn extends \yii\grid\ActionColumn
                     'class' => 'btn btn-info btn-xs',
                     'title' => Yii::t('app', 'View'),
                     //'onclick' => "viewLayer('" . $url . "',$(this))",
-                    'data-toggle' => 'modal',
-                    'data-target' => '#ajaxModal',
+                    'data-bs-toggle' => 'modal',
+                    'data-bs-target' => '#ajaxModal',
                     'data-remote' => $url,
                     'data-pjax' => '0'
                 ]);

@@ -9,10 +9,10 @@ namespace backend\widgets;
 
 use Yii;
 
-class ActiveForm extends \yii\bootstrap4\ActiveForm
+class ActiveForm extends \app\widgets\bootstrap5\ActiveForm
 {
     public $layout = 'horizontal';
-    public $fieldClass = 'backend\widgets\ActiveField';
+    public $fieldClass = 'app\widgets\bootstrap5\ActiveField';
     public $options = [];
     /* public $fieldConfig = [
         'template' => "{label}\n<div class=\"col-md-8\">{input}{hint}{error}</div>",

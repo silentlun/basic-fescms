@@ -65,16 +65,13 @@ class Content extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['catid', 'status', 'islink'], 'integer'],
+            [['catid', 'status'], 'integer'],
             [['title', 'catid'], 'required'],
             [['title', 'url', 'keywords'], 'trim'],
             [['description', 'content'], 'string'],
             [['title', 'thumb', 'keywords', 'url'], 'string', 'max' => 100],
             [['keywords'], 'string', 'max' => 50],
             [['status'], 'default', 'value' => self::STATUS_ACTIVE],
-            ['url', 'required', 'when' => function($model) {
-                return $model->islink == 1;
-            }],
             ['url', 'url'],
             [['tagValues'], 'safe'],
         ];
