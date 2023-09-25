@@ -73,7 +73,7 @@
 			swalClasses.icon + ' ' + iconTypes.question + '">?</div>\n    <div class="' + swalClasses.icon +
 			' ' + iconTypes.warning + '">!</div>\n    <div class="' + swalClasses.icon + ' ' + iconTypes
 			.info + '">i</div>\n    <div class="' + swalClasses.icon + ' ' + iconTypes.success +
-			'">\n      <span class="line tip"></span> <span class="line long"></span>\n      <div class="placeholder"></div> <div class="fix"></div>\n    </div>\n    <img class="' +
+			'">\n      <span class="line tip"></span> <span class="line long"></span>\n      <div class="swal2-placeholder"></div> <div class="fix"></div>\n    </div>\n    <img class="' +
 			swalClasses.image + '">\n    <h2></h2>\n    <div class="' + swalClasses.content +
 			'"></div>\n    <input class="' + swalClasses.input + '">\n    <input type="file" class="' +
 			swalClasses.file + '">\n    <div class="' + swalClasses.range +
