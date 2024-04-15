@@ -18,8 +18,8 @@ class Constants
     public static function getYesNoItems($key = null)
     {
         $items = [
-            self::YesNo_Yes => $key !== null ? '<span class="badge bg-light-success">'.Yii::t('app', 'Yes').'</span>' : Yii::t('app', 'Yes'),
-            self::YesNo_No => $key !== null ? '<span class="badge bg-light-dark">'.Yii::t('app', 'No').'</span>' : Yii::t('app', 'No'),
+            self::YesNo_Yes => $key !== null ? '<span class="badge badge-success-lighten">'.Yii::t('app', 'Yes').'</span>' : Yii::t('app', 'Yes'),
+            self::YesNo_No => $key !== null ? '<span class="badge badge-dark-lighten">'.Yii::t('app', 'No').'</span>' : Yii::t('app', 'No'),
         ];
         return self::getItems($items, $key);
     }
@@ -37,8 +37,8 @@ class Constants
     public static function getShowHideItems($key = null)
     {
         $items = [
-            self::YesNo_Yes => $key !== null ? '<span class="badge bg-light-success">'.Yii::t('app', 'Show').'</span>' : Yii::t('app', 'Show'),
-            self::YesNo_No => $key !== null ? '<span class="badge bg-light-dark">'.Yii::t('app', 'Hide').'</span>' : Yii::t('app', 'Hide'),
+            self::YesNo_Yes => $key !== null ? '<span class="badge badge-success-lighten">'.Yii::t('app', 'Show').'</span>' : Yii::t('app', 'Show'),
+            self::YesNo_No => $key !== null ? '<span class="badge badge-dark-lighten">'.Yii::t('app', 'Hide').'</span>' : Yii::t('app', 'Hide'),
         ];
         return self::getItems($items, $key);
     }
@@ -49,8 +49,8 @@ class Constants
     public static function getContentStatus($key = null)
     {
         $items = [
-            self::PUBLISH_YES => $key !== null ? '<span class="badge bg-light-success">'.Yii::t('app', 'Publish').'</span>' : Yii::t('app', 'Publish'),
-            self::PUBLISH_NO => $key !== null ? '<span class="badge bg-light-dark">'.Yii::t('app', 'Hide').'</span>' : Yii::t('app', 'Hide'),
+            self::PUBLISH_YES => $key !== null ? '<span class="badge badge-success-lighten">'.Yii::t('app', 'Publish').'</span>' : Yii::t('app', 'Publish'),
+            self::PUBLISH_NO => $key !== null ? '<span class="badge badge-dark-lighten">'.Yii::t('app', 'Hide').'</span>' : Yii::t('app', 'Hide'),
         ];
         return self::getItems($items, $key);
     }

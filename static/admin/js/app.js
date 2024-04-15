@@ -466,7 +466,7 @@ var App = {
 	}
 	App.renderModal = function(url, size = ''){
 		const modalHtml = document.createElement('div')
-		modalHtml.innerHTML = [`<div class="modal fade" id="ajaxModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"><div class="modal-dialog ${size}"><div class="modal-content"></div></div></div>`].join('')
+		modalHtml.innerHTML = [`<div class="modal fade" id="ajaxModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"><div class="modal-dialog modal-dialog-scrollable ${size}"><div class="modal-content"></div></div></div>`].join('')
 		//const modalHtml = `<div class="modal fade" id="ajaxModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"><div class="modal-dialog ${size}"><div class="modal-content"></div></div></div>`;
 		document.body.appendChild(modalHtml);
 		//new SimpleBar(document.getElementById('simplebar-content'));
@@ -889,6 +889,7 @@ $(function() {
 					location.reload();
 				}
 			});
+		}, function(dismiss) {
 		})
 	    return false;
 	})
@@ -922,6 +923,12 @@ $(function() {
 		
 		return false;
 		
+	});
+	//点击弹出模态框
+	$(document).on('click', '[data-toggle="modal"]', function (event) {
+		let url = $(this).data('remote');
+		let modalSize = $(this).data('size');
+		parent.App.renderModal(url, modalSize);
 	});
 	
 	//提交表单后除form为none-loading的class显示loading效果

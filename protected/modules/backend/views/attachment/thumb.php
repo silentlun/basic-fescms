@@ -8,8 +8,8 @@ use yii\helpers\Url;
 
 ?>
 <div class="modal-header">
-    <h4 class="modal-title" id="ajaxModalLabel">查看附件</h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">缩略图管理</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body">
   	<div class="row">

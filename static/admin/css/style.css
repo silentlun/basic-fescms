@@ -1621,7 +1621,7 @@ html[data-bs-theme=dark] #light-dark-mode .ri-moon-line::before {
 	margin-top: 0.2em;
 }
 .col-form-label{
-	font-size: 1rem;
+	font-size: 0.9375rem;
 }
 
 .card-radio {
@@ -2025,19 +2025,19 @@ html[data-layout=topnav] #topnav-color {
 
 .btn-warning {
 	--bs-btn-color: #fff;
-	--bs-btn-bg: #ffc35a;
-	--bs-btn-border-color: #ffc35a;
+	--bs-btn-bg: #faa64b;
+	--bs-btn-border-color: #faa64b;
 	--bs-btn-hover-color: #fff;
-	--bs-btn-hover-bg: #ecb453;
-	--bs-btn-hover-border-color: #ecb453;
+	--bs-btn-hover-bg: #f6962d;
+	--bs-btn-hover-border-color: #f6962d;
 	--bs-btn-focus-shadow-rgb: 255, 204, 115;
 	--bs-btn-active-color: #fff;
-	--bs-btn-active-bg: #ecb453;
-	--bs-btn-active-border-color: #ecb453;
+	--bs-btn-active-bg: #f6962d;
+	--bs-btn-active-border-color: #f6962d;
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 	--bs-btn-disabled-color: #fff;
-	--bs-btn-disabled-bg: #ffc35a;
-	--bs-btn-disabled-border-color: #ffc35a;
+	--bs-btn-disabled-bg: #faa64b;
+	--bs-btn-disabled-border-color: #faa64b;
 	-webkit-box-shadow: var(--bs-btn-box-shadow) rgba(var(--bs-warning-rgb), .5);
 	box-shadow: var(--bs-btn-box-shadow) rgba(var(--bs-warning-rgb), .5)
 }

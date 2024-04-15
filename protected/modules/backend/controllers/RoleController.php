@@ -125,11 +125,11 @@ class RoleController extends BaseController
             foreach ($needRemoves as $old) {
                 $auth->removeChild($role, $auth->getPermission($old));
             }
-            Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
-            return $this->redirect(['index']);
+            //Yii::$app->session->setFlash('success', Yii::t('app', 'Save Success'));
+            //return $this->redirect(['index']);
             
-            /* \Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-            return ['code' => 200, 'message' => Yii::t('app', 'Success')]; */
+            \Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+            return ['code' => 200, 'message' => Yii::t('app', 'Success')];
             
         }
         $model = new RoleForm();

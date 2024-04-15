@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $thumb = glob(dirname(Yii::getAlias('@uploads/').$model->filepath).'/thumb_*'.basename($model->filepath));
                 $showthumb = $thumb ? ' '.Html::button('管理缩略图', ['class' => 'btn btn-xs btn-success',
                     'data-toggle' => 'modal',
-                    'data-target' => '#ajaxModalLg',
+                    'data-size' => 'modal-lg',
                     'data-remote' => Url::toRoute(['attachment/thumbs', 'filepath' => $model->filepath]),
                     'data-pjax' => '0']) : '';
                 return '<i class="fa '.$icon.'"></i> '.$model->filename.$showthumb;
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'format' => 'raw',
                 'value' => function($model){
-                return $model->status == 1 ? '<label class="badge bg-light-success">已使用</label>' : '<label class="badge bg-light-dark">未使用</label>';
+                return $model->status == 1 ? '<label class="badge badge-success-lighten">已使用</label>' : '<label class="badge badge-dark-lighten">未使用</label>';
             }
             ],
             [

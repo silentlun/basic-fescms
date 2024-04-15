@@ -5,7 +5,7 @@
 /* @var $model \common\models\LoginForm */
 use backend\assets\AdminAsset;
 use yii\helpers\Html;
-use yii\bootstrap5\ActiveForm;
+use backend\widgets\ActiveForm;
 use yii\captcha\Captcha;
 use yii\helpers\Url;
 
@@ -48,7 +48,7 @@ $this->title = '登录-FesAdmin';
 
 
 		<div class="login-content">
-			<?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+			<?php $form = ActiveForm::begin(['id' => 'login-form', 'layout' => 'default']); ?>
 				<?= $form->field($model, 'username')->label(false)->textInput(['class' => 'form-control input-lg form-control-lg', 'placeholder' => '管理账号']) ?>
         <?= $form->field($model, 'password')->label(false)->passwordInput(['class' => 'form-control input-lg form-control-lg', 'placeholder' => '账号密码']) ?>
         <?= $form->field($model, 'verifyCode')->label(false)->widget(Captcha::className(), [
@@ -62,7 +62,7 @@ $this->title = '登录-FesAdmin';
 				<div class="mb-4">
                     <?= Html::submitButton('登 录', ['class' => 'btn btn-info d-block w-100 btn-lg', 'name' => 'login-button', 'data-loading-text' => '登录中...']) ?>
                 </div>
-                <div class="text-white-50"> © <?=date('Y');?> FesAdmin All Rights Reserved. </div>
+                <div class="text-white-50 text-center"> © <?=date('Y');?> FesAdmin All Rights Reserved. </div>
 			<?php ActiveForm::end(); ?>
 		</div>
 

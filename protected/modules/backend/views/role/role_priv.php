@@ -20,7 +20,7 @@ $this->registerJsFile(
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     
   </div>
-  <?php $form = ActiveForm::begin(); ?>
+  <?php $form = ActiveForm::begin(['id' => 'privForm']); ?>
   <div class="modal-body ajaxmodal-content">
     <table class="table treeTable" id="dnd-example">
           <thead>
@@ -36,7 +36,7 @@ $this->registerJsFile(
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-    <button type="submit" class="btn btn-primary">保存</button>
+    <button type="button" class="btn btn-primary" id="submitBtn">保存</button>
   </div>
   <?php ActiveForm::end(); ?>
 
@@ -44,6 +44,21 @@ $this->registerJsFile(
     <script>
     $(document).ready(function() {
         $("#dnd-example").treeTable({indent: 20});
+        //保存权限
+        $(document).on('click', '#submitBtn', function(event){
+    		event.preventDefault();
+    		App.ajax({
+    			url: $("#privForm").attr('action'),
+    			type: 'post',
+    			data: $("#privForm").serialize(),
+    			success: function (data) {
+    				$('[data-bs-dismiss="modal"]').click();
+    				parent.swal({title: '修改成功！', type: 'success', timer: 1500});
+    			}
+    		});
+    		
+    		
+    	});
     });
     function checknode(obj)
     {

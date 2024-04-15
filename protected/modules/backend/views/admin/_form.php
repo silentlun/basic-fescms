@@ -22,10 +22,9 @@ if($model->getId() == 1){
 ?>
 <?= $this->render('/widgets/_page-heading') ?>
 <div class="card">
-  <ul class="nav nav-tabs page-tabs">
-    <li class="nav-item active"><a class="nav-link"><?= $subtitle ?></a></li>
-  </ul>
+  
   <div class="card-body">
+  	<h4 class="header-title"><?= $subtitle ?></h4>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true, 'readonly' => $model->id]) ?>
